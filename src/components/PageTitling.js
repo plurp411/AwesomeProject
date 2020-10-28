@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
 	container: {
 		padding: 20,
 		// backgroundColor: 'rgb(245, 245, 245)',
+		backgroundColor: 'rgb(255, 255, 255)',
 	},
 	title: {
 		fontWeight: 700,

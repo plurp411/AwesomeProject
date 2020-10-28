@@ -1,38 +1,34 @@
 import React, { Component } from 'react';
-import { Icon, Text, TopNavigation, TopNavigationAction } from '@ui-kitten/components';
-// import { styles } from 'react-native-markdown-renderer';
+import { TopNavigation, Divider } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
 
-const BackIcon = (props) => (
-  <Icon {...props} name='arrow-back'/>
-);
-
-const BackAction = () => (
-  <TopNavigationAction icon={BackIcon}/>
-);
-
-// export const Navbar = () => (
-//   <TopNavigation
-//     accessoryLeft={BackAction}
-//     title='Eva Application'
-//   />
-// );
-
 export default class Navbar extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+  
+        }
+    }
+
     render() {
         return (
-            <TopNavigation
-                accessoryLeft={BackAction}
-                title={this.props.title}
-                style={navbarStyles.navbar}
-            />
+            <>
+                <TopNavigation
+                    alignment="center"
+                    title={this.props.title}
+                    style={navbarStyles.navbar}
+                />
+                <Divider />
+            </>
         );
     }
 }
 
 const navbarStyles = StyleSheet.create({
 	navbar: {
-		backgroundColor: 'rgb(245, 245, 245)',
+        // backgroundColor: 'rgb(245, 245, 245)',
+        // textAlign: 'center',
     },
 });
 

@@ -2,10 +2,10 @@
 // import {PureComponent} from 'react-native';
 import React, { Component } from 'react';
 import Markdown, {getUniqueID} from 'react-native-markdown-renderer';
-import { StyleSheet, View } from 'react-native';
-import { Divider } from '@ui-kitten/components';
-import PageTitling from './PageTitling';
-import BottomNavButtons from './BottomNavButtons';
+import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native';
+// import { Divider } from '@ui-kitten/components';
+// import PageTitling from './PageTitling';
+// import BottomNavButtons from './BottomNavButtons';
 
 // const rules = {
 //   heading1: (node, children, parent, styles) =>
@@ -51,11 +51,14 @@ const styles = StyleSheet.create({
     maxWidth: 500,
     margin: 'auto',
     resizeMode: 'contain',
+    borderRadius: 5,
+    overflow: 'hidden',
   }
 });
 
 const viewStyles = StyleSheet.create({
   view: {
+    backgroundColor: 'rgb(255, 255, 255)',
     paddingTop: 20,
     paddingBottom: 10,
     paddingLeft: 20,
@@ -69,15 +72,30 @@ export default class MarkdownTest extends Component {
     super(props)
     this.state = {
       markdown: null,
-      info: null
+      // info: null
     }
   }
 
   componentDidMount() {
     const mdPath = require(`./pages/${this.props.fileName}.md`);
-    const jsonPath = require(`./pages/${this.props.fileName}.txt`);
-  
-    fetch(mdPath)
+    // const jsonPath = require(`./pages/${this.props.fileName}.txt`);
+
+
+
+
+
+
+
+
+    // https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.md
+    // https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.txt
+
+
+
+
+
+    // fetch(mdPath)
+    fetch('https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.md')
       .then(response => {
         return response.text()
       })
@@ -87,41 +105,51 @@ export default class MarkdownTest extends Component {
         })
       })
 
-    console.log('asdf')
+    // console.log('asdf')
 
-    fetch(jsonPath)
-      .then(response => {
-        // console.log(response.text())
-        // console.log('response.json(')
-        return response.json()
-      })
-      .then(json => {
-        this.setState({
-          info: json
-        })
-      })
+    // fetch(jsonPath)
+    //   .then(response => {
+    //     // console.log(response.text())
+    //     // console.log('response.json(')
+    //     return response.json()
+    //   })
+    //   .then(json => {
+    //     this.setState({
+    //       info: json
+    //     })
+    //   })
   }
 
   render() {
-    const { markdown, info } = this.state;
+    // const { markdown, info } = this.state;
+    const { markdown } = this.state;
     return (
       <>
-        {info && 
-          <>
-            <PageTitling
-              title={info.title}
-              subtitle={info.subtitle}
-            />
-            <Divider />
-          </>
-        }
-        <View style={viewStyles.view}>
-          <Markdown style={styles}>{markdown}</Markdown>
-        </View>
+      {/* <SafeAreaView>
+        <ScrollView> */}
 
-        {/* <Divider /> */}
+          {/* {info && 
+            <>
+              <PageTitling
+                title={info.title}
+                subtitle={info.subtitle}
+              />
+              <Divider />
+            </>
+          } */}
 
-        <BottomNavButtons />
+          <View style={viewStyles.view}>
+            {markdown &&
+              <Markdown style={styles}>{markdown}</Markdown>
+            }
+          </View>
+
+          {/* <Divider /> */}
+
+          {/* <BottomNavButtons /> */}
+
+        {/* </ScrollView>
+      </SafeAreaView> */}
       </>
     );
   }

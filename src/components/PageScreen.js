@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar';
+import BackNavbar from './BackNavbar';
 import MarkdownFile from './MarkdownFile';
-import { Layout, Divider } from '@ui-kitten/components';
+import { Divider } from '@ui-kitten/components';
+import PageTitling from './PageTitling';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default class PageScreen extends Component {
+// const navigateBack = () => {
+//   navigation.goBack();
+// };
+
+class PageScreen extends Component {
 
     constructor(props) {
       super(props)
@@ -11,36 +18,67 @@ export default class PageScreen extends Component {
         info: null
       }
     }
-  
-    componentDidMount() {
-      const jsonPath = require(`./pages/1.txt`);
-    
-      fetch(jsonPath)
-        .then(response => {
-          // console.log(response.text())
-          // console.log('response.json(')
-          return response.json()
-        })
-        .then(json => {
-          this.setState({
-            info: json
-          })
-        })
-    }
+
+    // componentDidMount() {
+    //   navigation.setOptions({ title: 'info.titl' })
+    // }
   
     render() {
-      const { info } = this.state;
+    //   const { info } = this.state;
+      const { pageId, info } = this.props.route.params;
+      const { navigation } = this.props;
+      // navigation.setOptions({ title: info.title })
       return (
-        <Layout>
-  
-          {info && <Navbar title={info.title} />}
-  
-          <Divider />
-  
-          <MarkdownFile fileName="1" />
-  
-        </Layout>
+        <>
+
+          <BackNavbar
+            title={info.title}
+          />
+
+        {/* <Layout> */}
+            <SafeAreaView style={styles.safeView}>
+
+            {/* <BackNavbar
+                title={info.title}
+            /> */}
+
+            {/* <View style={{flex: 1}}> */}
+                <ScrollView>
+            
+                        {info && 
+                            <>
+                                <PageTitling
+                                    title={info.title}
+                                    subtitle={info.subtitle}
+                                />
+                                <Divider />
+                            </>
+                        }
+
+                    {/* {info && <Navbar title={info.title} />} */}
+            
+                    {/* <Divider /> */}
+            
+                    <MarkdownFile fileName={pageId} />
+                    
+                </ScrollView>
+                {/* </View> */}
+            </SafeAreaView>
+        {/* </Layout> */}
+        </>
       );
     }
+}
+
+const styles = StyleSheet.create({
+  safeView: {
+    flex: 1,
+    backgroundColor: 'rgb(245, 245, 245)',
   }
-  
+});
+
+export default function(props) {
+  const navigation = useNavigation();
+
+  return <PageScreen {...props} navigation={navigation} />;
+}
