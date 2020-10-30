@@ -7,25 +7,23 @@ class SearchInput extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            value: ''
+            value: '',
         }
-        this.handleSearch = this.handleSearch.bind(this)
+        // this.handleSearch = this.handleSearch.bind(this)
         this.searchButton = this.searchButton.bind(this)
     }
 
-    handleSearch() {
-        console.log('search')
-    }
-
     searchButton(props) {
+        const { handleSearch } =  this.props
+        const { value } = this.state
         return (
             // <TouchableWithoutFeedback onPress={this.handleSearch}>
             //     <Icon {...props} name='search-outline' />
             // </TouchableWithoutFeedback>
             // <Icon {...props} name='search-outline' onPress={this.handleSearch} />
-            <TouchableWithoutFeedback onPress={this.handleSearch}>
+            <TouchableWithoutFeedback onPress={ () => handleSearch(value) }>
                 <View>
-                    <Icon {...props} name='search-outline' />
+                    <Icon {...props} name='search-outline' style={styles.searchIcon} />
                 </View>
             </TouchableWithoutFeedback>
             // <Button
@@ -40,7 +38,7 @@ class SearchInput extends Component {
     }
 
     render() {
-        const { value } = this.state;
+        const { value } = this.state
         return (
             <Input
                 styles={styles.searchInput}
@@ -64,10 +62,13 @@ export default class SearchBar extends Component {
     }
 
     render() {
+        const { handleSearch } =  this.props
         return (
             <>
                 <View style={styles.view}>
-                    <SearchInput />
+                    <SearchInput
+                        handleSearch={handleSearch}
+                    />
                 </View>
                 <Divider />
             </>
@@ -90,6 +91,7 @@ const styles = StyleSheet.create({
     searchIcon: {
         height: 20,
         width: 20,
+        cursor: 'pointer',
     },
     // searchButton: {
     //     borderRadius: 999,

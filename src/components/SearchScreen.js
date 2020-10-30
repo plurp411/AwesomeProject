@@ -4,6 +4,8 @@ import { Text } from '@ui-kitten/components';
 import Workout from './Workout';
 import SearchBar from './SearchBar';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import Bookmark from '../Bookmark';
+import GLOBAL from '../global'
 
 export default class SearchScreen extends Component {
 
@@ -12,10 +14,17 @@ export default class SearchScreen extends Component {
       this.state = {
         info: null,
         foundInfo: null,
+        bookmarks: null,
       }
+      // GLOBAL.exploreScreen = this
+      // Bookmark.getBookmarksData()
+      this.handleSearch = this.handleSearch.bind(this)
     }
   
     componentDidMount() {
+
+      this.props.navigation.addListener('focus', this.onScreenFocus)
+
       const jsonPath = require(`./pages/all.txt`);
     
       fetch(jsonPath)
@@ -27,40 +36,45 @@ export default class SearchScreen extends Component {
           this.setState({
             info: json
           })
-
-
-
-          const { info } = this.state;
-        
-          if (!info) {
-            return
-          }
-  
-          const foundInfo = Object.keys(info)
-            .filter(key => info[key]['title'].includes('a'))
-            .reduce((obj, key) => {
-              obj[key] = info[key];
-              return obj;
-            }, {});
-  
-  
-  
-  
-          console.log('foundInfo')
-          console.log(foundInfo)
-  
-  
-          this.setState({ foundInfo: foundInfo })
-
-
-
         })
 
+      GLOBAL.exploreScreen = this
+      Bookmark.getBookmarksData()
+    }
+
+    onScreenFocus = () => {
+      GLOBAL.exploreScreen = this
+      Bookmark.getBookmarksData()
+    }
+
+    handleSearch(searchInput) {
+      
+      const { info } = this.state;
+        
+      if (!info) {
+        return
+      }
+
+      const cleanSearchInput = searchInput.trim().toLowerCase()
+
+      if (cleanSearchInput == '') {
+        this.setState({ foundInfo: {} })
+        return
+      }
+
+      const foundInfo = Object.keys(info)
+        .filter(key => info[key]['title'].toLowerCase().includes(cleanSearchInput))
+        .reduce((obj, key) => {
+          obj[key] = info[key];
+          return obj;
+        }, {});
+
+      this.setState({ foundInfo: foundInfo })
     }
 
     render() {
-      const { foundInfo } = this.state;
-      const { navigation } = this.props;
+      const { foundInfo } = this.state
+      const { navigation } = this.props
       return (
         <SafeAreaView style={styles.safeView}>
 
@@ -68,7 +82,9 @@ export default class SearchScreen extends Component {
             title='Home'
           /> */}
 
-          <SearchBar />
+          <SearchBar
+            handleSearch={this.handleSearch}
+          />
           
           {foundInfo && Object.keys(foundInfo).length > 0 &&
 

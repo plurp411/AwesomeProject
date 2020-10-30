@@ -1,28 +1,14 @@
 import React, { Component } from 'react';
-import { Icon, TopNavigation, TopNavigationAction, Divider, OverflowMenu, MenuItem } from '@ui-kitten/components';
+import { Icon, TopNavigation, TopNavigationAction, Divider } from '@ui-kitten/components';
 // import { styles } from 'react-native-markdown-renderer';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 // import { styles } from 'react-native-markdown-renderer';
+import ShareMenu from './ShareMenu';
+import BookmarkButton from './BookmarkButton'
 
 const BackIcon = (props) => (
     <Icon {...props} name='arrow-back' />
-);
-
-const ShareIcon = (props) => (
-    <Icon {...props} name='share-outline' style={styles.shareIcon} />
-);
-
-const FacebookIcon = (props) => (
-    <Icon {...props} name='facebook-outline' style={styles.shareIcon} />
-);
-
-const SmsIcon = (props) => (
-    <Icon {...props} name='message-circle-outline' style={styles.shareIcon} />
-);
-
-const EmailIcon = (props) => (
-    <Icon {...props} name='email-outline' style={styles.shareIcon} />
 );
 
 // function handleBack() {
@@ -60,7 +46,7 @@ function BackAction() {
 //     <TopNavigationAction icon={shareIcon} onPress={toggleMenu}/>
 // );
 
-// const renderOverflowMenuAction = () => (
+// const shareMenu = () => (
 //     <React.Fragment>
 //         <OverflowMenu
 //             anchor={renderMenuAction}
@@ -72,49 +58,24 @@ function BackAction() {
 //     </React.Fragment>
 // );
 
-class renderOverflowMenuAction extends Component {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            isMenuVisible: false
-        }
-        this.toggleMenu = this.toggleMenu.bind(this)
-        this.renderMenuAction = this.renderMenuAction.bind(this)
-    }
-
-    toggleMenu() {
-        // const newVal = !this.state.isMenuVisible;
-        this.setState({ isMenuVisible: !this.state.isMenuVisible });
-    }
-
-    renderMenuAction() {
-        return (
-            <TopNavigationAction icon={ShareIcon} onPress={this.toggleMenu}/>
-        );
-    }
-
-    render() {
-        return (
-            <>
-                <OverflowMenu
-                    anchor={this.renderMenuAction}
-                    visible={this.state.isMenuVisible}
-                    onBackdropPress={this.toggleMenu}>
-                    <MenuItem accessoryLeft={FacebookIcon} title='Facebook'/>
-                    <MenuItem accessoryLeft={SmsIcon} title='SMS'/>
-                    <MenuItem accessoryLeft={EmailIcon} title='Email'/>
-                </OverflowMenu>
-            </>
-        );
-    }
-}
 
 // export const Navbar = () => (
 //   <TopNavigation
 //     accessoryLeft={BackAction}
 //     title='Eva Application'
 //   />
+// );
+
+// const rightArea = () => (
+//     <>
+//         <ShareMenu
+//             iconSize={20}
+//         />
+//         <BookmarkButton
+//             pageId={pageId}
+//             iconSize={20}
+//         />
+//     </>
 // );
 
 export default class BackNavbar extends Component {
@@ -124,6 +85,24 @@ export default class BackNavbar extends Component {
         this.state = {
   
         }
+        this.rightArea = this.rightArea.bind(this)
+    }
+
+    rightArea() {
+        const iconSize = 20
+        const { pageId, triggerReload } = this.props
+        return (
+            <>
+                <ShareMenu
+                    iconSize={iconSize}
+                />
+                <BookmarkButton
+                    pageId={pageId}
+                    iconSize={iconSize}
+                    triggerReload={triggerReload}
+                />
+            </>
+        )
     }
 
     // BackAction(navigateBack) {
@@ -133,6 +112,7 @@ export default class BackNavbar extends Component {
     // }
 
     render() {
+        const { title } = this.props
         return (
             <>
                 {/* {canGoBack && */}
@@ -141,8 +121,8 @@ export default class BackNavbar extends Component {
                             alignment="center"
                             accessoryLeft={BackAction}
                             // accessoryRight={ShareAction}
-                            accessoryRight={renderOverflowMenuAction}
-                            title={this.props.title}
+                            accessoryRight={this.rightArea}
+                            title={title}
                             style={styles.navbar}
                         />
                         <Divider />
@@ -156,10 +136,6 @@ export default class BackNavbar extends Component {
 const styles = StyleSheet.create({
 	navbar: {
 		// backgroundColor: 'rgb(245, 245, 245)',
-    },
-    shareIcon: {
-        height: 20,
-        width: 20,
     },
 });
 

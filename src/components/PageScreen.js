@@ -5,6 +5,7 @@ import { Divider } from '@ui-kitten/components';
 import PageTitling from './PageTitling';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Bookmark from '../Bookmark';
 
 // const navigateBack = () => {
 //   navigation.goBack();
@@ -15,24 +16,43 @@ class PageScreen extends Component {
     constructor(props) {
       super(props)
       this.state = {
-        info: null
+        // info: null,
+        triggerReload: false,
       }
     }
 
     // componentDidMount() {
     //   navigation.setOptions({ title: 'info.titl' })
     // }
+
+    componentDidMount() {
+      const { info } = this.props.route.params
+      this.props.navigation.setOptions({ title: info.title })
+      this.props.navigation.addListener('focus', this.onScreenFocus)
+    }
+
+    onScreenFocus = () => {
+      // Bookmark.getBookmarksData()
+      // console.log('PAGE focus')
+      const { triggerReload } = this.state
+      this.setState({
+        triggerReload: !triggerReload
+      })
+    }
   
     render() {
     //   const { info } = this.state;
-      const { pageId, info } = this.props.route.params;
-      const { navigation } = this.props;
+      const { pageId, info } = this.props.route.params
+      const { navigation } = this.props
+      const { triggerReload } = this.state
       // navigation.setOptions({ title: info.title })
       return (
         <>
 
           <BackNavbar
             title={info.title}
+            pageId={pageId}
+            triggerReload={triggerReload}
           />
 
         {/* <Layout> */}
@@ -82,3 +102,4 @@ export default function(props) {
 
   return <PageScreen {...props} navigation={navigation} />;
 }
+

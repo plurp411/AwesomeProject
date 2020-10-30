@@ -49,10 +49,13 @@ const styles = StyleSheet.create({
   image: {
     // backgroundColor: 'rgb(245, 245, 245)',
     maxWidth: 500,
-    margin: 'auto',
+    marginTop: 10,
+    marginHorizontal: 'auto',
     resizeMode: 'contain',
     borderRadius: 5,
     overflow: 'hidden',
+    borderColor: 'rgb(225, 225, 225)',
+    borderWidth: 1
   }
 });
 

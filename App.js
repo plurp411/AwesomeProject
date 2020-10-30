@@ -1,10 +1,10 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { Component } from 'react';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import PageScreen from './src/components/PageScreen';
-import HomeScreen from './src/components/HomeScreen';
+import ExploreScreen from './src/components/ExploreScreen';
 import SearchScreen from './src/components/SearchScreen';
 import BookmarksScreen from './src/components/BookmarksScreen';
 import { StyleSheet } from 'react-native';
@@ -12,11 +12,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab, Icon, Divider } from '@ui-kitten/components';
+import GLOBAL from './src/global'
+import Bookmark from './src/Bookmark'
 
 const Stack = createStackNavigator();
 const { Navigator, Screen } = createBottomTabNavigator();
 
-const HomeIcon = (props) => (
+const ExploreIcon = (props) => (
   // <Icon {...props} name='home-outline'/>
   <Icon {...props} name='globe-2-outline'/>
 );
@@ -40,20 +42,20 @@ const BottomTabBar = ({ navigation, state }) => (
       style={styles.tabBar}
     >
       <BottomNavigationTab title='Bookmarks' icon={BookmarksIcon}/>
-      <BottomNavigationTab title='Explore' icon={HomeIcon}/>
+      <BottomNavigationTab title='Explore' icon={ExploreIcon}/>
       <BottomNavigationTab title='Search' icon={SearchIcon}/>
     </BottomNavigation>
   </>
 );
 
-function HomeStackNavigator() {
+function ExploreStackNavigator() {
   return (
     <Stack.Navigator headerMode='none'>
 
       <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ title: 'Home' }}
+        name="Explore"
+        component={ExploreScreen}
+        options={{ title: 'Explore' }}
       />
 
       <Stack.Screen
@@ -71,7 +73,7 @@ function SearchStackNavigator() {
     <Stack.Navigator headerMode='none'>
 
       <Stack.Screen
-        name="Home"
+        name="Search"
         component={SearchScreen}
         options={{ title: 'Search' }}
       />
@@ -106,44 +108,116 @@ function BookmarksStackNavigator() {
   );
 }
 
-const TabNavigator = () => (
-  <Navigator tabBar={props => <BottomTabBar {...props} />}>
-    <Screen name='Bookmarks' component={BookmarksStackNavigator}/>
-    <Screen name='Explore' component={HomeStackNavigator}/>
-    <Screen name='Search' component={SearchStackNavigator}/>
-  </Navigator>
-);
+// const TabNavigator = () => (
+//   <Navigator tabBar={props => <BottomTabBar {...props} />}>
+//     <Screen name='Bookmarks' component={BookmarksStackNavigator}/>
+//     <Screen name='Explore' component={ExploreStackNavigator}/>
+//     <Screen name='Search' component={SearchStackNavigator}/>
+//   </Navigator>
+// );
 
-export default () => (
-  <>
-    <IconRegistry icons={EvaIconsPack} />
-    <ApplicationProvider {...eva} theme={eva.light}>
+class TabNavigator extends Component {
 
-      {/* <PageScreen /> */}
-      <NavigationContainer>
-        {/* <Stack.Navigator>
+  // constructor(props) {
+  //   super(props)
+  //   this.state = {
+  //     bookmarks: null,
+  //   }
+  //   GLOBAL.exploreScreen = this
+  //   Bookmark.getBookmarksData()
+  // }
 
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{ title: 'Home' }}
-          />
+  render() {
+      return (
+        <Navigator tabBar={props => <BottomTabBar {...props} />}>
+          <Screen name='Bookmarks' component={BookmarksStackNavigator}/>
+          <Screen name='Explore' component={ExploreStackNavigator}/>
+          <Screen name='Search' component={SearchStackNavigator}/>
+        </Navigator>
+      )
+    }
+  }
 
-          <Stack.Screen
-            name="Page"
-            component={PageScreen}
-            options={{ title: '' }}
-          />  
+// export default () => (
+//   <>
+//     <IconRegistry icons={EvaIconsPack} />
+//     <ApplicationProvider {...eva} theme={eva.light}>
 
-        </Stack.Navigator> */}
+//       {/* <PageScreen /> */}
+//       <NavigationContainer>
+//         {/* <Stack.Navigator>
 
-        <TabNavigator/>
+//           <Stack.Screen
+//             name="Home"
+//             component={HomeScreen}
+//             options={{ title: 'Home' }}
+//           />
 
-      </NavigationContainer>
+//           <Stack.Screen
+//             name="Page"
+//             component={PageScreen}
+//             options={{ title: '' }}
+//           />  
 
-    </ApplicationProvider>
-  </>
-);
+//         </Stack.Navigator> */}
+
+//         <TabNavigator/>
+
+//       </NavigationContainer>
+
+//     </ApplicationProvider>
+//   </>
+// );
+
+export default class extends Component {
+
+  // constructor(props) {
+  //   super(props)
+  //   this.state = {
+  //     bookmarks: null,
+  //   }
+  //   GLOBAL.exploreScreen = this
+  //   Bookmark.getBookmarksData()
+  // }
+
+  // componentDidMount() {
+  //   Bookmark.getBookmarksData()
+  // }
+
+  render() {
+    return (
+      <>
+        <IconRegistry icons={EvaIconsPack} />
+        <ApplicationProvider {...eva} theme={eva.light}>
+
+          {/* <PageScreen /> */}
+          <NavigationContainer>
+            {/* <Stack.Navigator>
+
+              <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ title: 'Home' }}
+              />
+
+              <Stack.Screen
+                name="Page"
+                component={PageScreen}
+                options={{ title: '' }}
+              />  
+
+            </Stack.Navigator> */}
+
+            <TabNavigator/>
+
+          </NavigationContainer>
+
+        </ApplicationProvider>
+      </>
+    )
+  }
+
+}
 
 const styles = StyleSheet.create({
 	// tabBar: {
