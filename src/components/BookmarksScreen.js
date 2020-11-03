@@ -3,22 +3,50 @@ import { Text, Button } from '@ui-kitten/components';
 import Workout from './Workout';
 import Navbar from './Navbar';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import Bookmark from '../Bookmark';
+import GLOBAL from '../global'
 
 export default class BookmarksScreen extends Component {
 
     constructor(props) {
       super(props)
       this.state = {
-        workoutIds: []
+        info: null,
+        bookmarks: null,
       }
     }
   
     componentDidMount() {
       
+      this.props.navigation.addListener('focus', this.onScreenFocus)
+
+      const jsonPath = require(`./pages/all.txt`);
+    
+      fetch(jsonPath)
+        .then(response => {
+          return response.json()
+        })
+        .then(json => {
+          this.setState({
+            info: json
+          })
+        })
     }
   
+    onScreenFocus = () => {
+      GLOBAL.exploreScreen = this
+      Bookmark.getBookmarksData()
+      console.log('BOOKMARKS focus')
+    }
+
     render() {
-      const { workoutIds } = this.state;
+      const { info } = this.state
+      const { navigation } = this.props
+      if (!GLOBAL.exploreScreen) {
+        console.log('aslkdjfhgaslkdjfhas')
+        return null
+      }
+      const { bookmarks } = GLOBAL.exploreScreen.state
       return (
         <SafeAreaView style={styles.safeView}>
 
@@ -28,23 +56,34 @@ export default class BookmarksScreen extends Component {
 
           {/* <SearchBar /> */}
           
-          {workoutIds.length > 0 &&
-
+          {
+            info && bookmarks.length > 0 &&
+          
             <ScrollView style={styles.workouts}>
 
-              {workoutIds.map((workoutId, index) =>
-                <Workout
-                  key={workoutId}
-                  isFirst={index == 0}
-                  pageId={workoutId}
-                  navigation={this.props.navigation}
-                />
-              )}
+              {
+                Object.keys(info).map((key, index) => (
+                  <React.Fragment key={key}>
+                    {
+                      bookmarks.includes(key) &&
+                      <Workout
+                        info={info[key]}
+                        pageId={key}
+                        isFirst={index == 0}
+                        navigation={navigation}
+                        // handleBookmark={this.handleBookmark}
+                        // isBookmarked={bookmarks.includes(key)}
+                      />
+                    }
+                  </React.Fragment>
+                ))
+              }
 
             </ScrollView>
           }
 
-          {workoutIds.length <= 0 &&
+          {
+            (!info || bookmarks.length <= 0) && 
 
             <View style={styles.emptyView}>
               <Text style={styles.emptyText}>

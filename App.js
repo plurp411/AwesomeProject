@@ -14,6 +14,38 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab, Icon, Divider } from '@ui-kitten/components';
 import GLOBAL from './src/global'
 import Bookmark from './src/Bookmark'
+import LoginScreen from './src/components/LoginScreen';
+
+
+
+import * as firebase from 'firebase';
+
+// Optionally import the services that you want to use
+import "firebase/auth";
+//import "firebase/database";
+//import "firebase/firestore";
+//import "firebase/functions";
+//import "firebase/storage";
+
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyCccYsv-qFz0HAExhRXPGu2TDStRQhG8_o",
+  authDomain: "workouts-1f2c7.firebaseapp.com",
+  databaseURL: "https://workouts-1f2c7.firebaseio.com",
+  projectId: "workouts-1f2c7",
+  storageBucket: "workouts-1f2c7.appspot.com",
+  messagingSenderId: "78808038586",
+  appId: "1:78808038586:web:f77a49c55e962350e01683",
+  measurementId: "G-E4MCYXXCYK"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+
+
+
+
+
 
 const Stack = createStackNavigator();
 const { Navigator, Screen } = createBottomTabNavigator();
@@ -184,33 +216,112 @@ export default class extends Component {
   //   Bookmark.getBookmarksData()
   // }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      isSignedIn: null
+    }
+  }
+
+  componentDidMount() {
+
+    // const email = 'plurp911@gmail.com'
+    // const password = 'LOSER_13io'
+
+    // firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
+    //   console.log('success')
+    // }).catch(function(error) {
+    //   // Handle Errors here.
+    //   var errorCode = error.code;
+    //   var errorMessage = error.message;
+    //   console.log('error')
+    //   console.log(errorCode)
+    //   console.log(errorMessage)
+    //   // ...
+    // });
+
+    let _this = this;
+
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+
+        // User is signed in.
+        var displayName = user.displayName;
+        var email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData;
+
+        console.log('good')
+        console.log(user)
+
+        _this.setState({
+          isSignedIn: true
+        })
+        
+        // ...
+
+      } else {
+
+        // User is signed out.
+        // ...
+
+        console.log('bad')
+
+        _this.setState({
+          isSignedIn: false
+        })
+      }
+    });
+
+  }
+
   render() {
+    const { isSignedIn } = this.state
     return (
       <>
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider {...eva} theme={eva.light}>
 
-          {/* <PageScreen /> */}
-          <NavigationContainer>
-            {/* <Stack.Navigator>
 
-              <Stack.Screen
-                name="Home"
-                component={HomeScreen}
-                options={{ title: 'Home' }}
-              />
 
-              <Stack.Screen
-                name="Page"
-                component={PageScreen}
-                options={{ title: '' }}
-              />  
+          {
+            isSignedIn &&
 
-            </Stack.Navigator> */}
+            <NavigationContainer>
+              {/* <Stack.Navigator>
 
-            <TabNavigator/>
+                <Stack.Screen
+                  name="Home"
+                  component={HomeScreen}
+                  options={{ title: 'Home' }}
+                />
 
-          </NavigationContainer>
+                <Stack.Screen
+                  name="Page"
+                  component={PageScreen}
+                  options={{ title: '' }}
+                />  
+
+              </Stack.Navigator> */}
+
+              <TabNavigator/>
+
+            </NavigationContainer>
+          }
+
+          {
+            !isSignedIn &&
+
+            <LoginScreen />
+
+          }
+
+
+
+
 
         </ApplicationProvider>
       </>

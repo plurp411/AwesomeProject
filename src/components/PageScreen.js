@@ -50,7 +50,7 @@ class PageScreen extends Component {
         <>
 
           <BackNavbar
-            title={info.title}
+            info={info}
             pageId={pageId}
             triggerReload={triggerReload}
           />

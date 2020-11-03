@@ -72,7 +72,7 @@ export default class BookmarkButton extends Component {
 
     bookmarkIcon(props) {
         const { iconStyle } = this.state
-        const { bookmarks } = GLOBAL.exploreScreen.state || GLOBAL.exploreScreen.state
+        const { bookmarks } = GLOBAL.exploreScreen.state
         
         // console.log('fsd')
         // console.log('-0-' + GLOBAL.exploreScreen.state.bookmarks)

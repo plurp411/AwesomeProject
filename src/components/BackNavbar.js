@@ -89,12 +89,17 @@ export default class BackNavbar extends Component {
     }
 
     rightArea() {
-        const iconSize = 20
-        const { pageId, triggerReload } = this.props
+        const iconSize = 24
+        const { info, pageId, triggerReload } = this.props
         return (
             <>
+                {/* <ShareMenu
+                    iconSize={iconSize}
+                /> */}
                 <ShareMenu
                     iconSize={iconSize}
+                    info={info}
+                    pageId={pageId}
                 />
                 <BookmarkButton
                     pageId={pageId}
@@ -112,7 +117,7 @@ export default class BackNavbar extends Component {
     // }
 
     render() {
-        const { title } = this.props
+        const { info } = this.props
         return (
             <>
                 {/* {canGoBack && */}
@@ -122,7 +127,7 @@ export default class BackNavbar extends Component {
                             accessoryLeft={BackAction}
                             // accessoryRight={ShareAction}
                             accessoryRight={this.rightArea}
-                            title={title}
+                            title={info.title}
                             style={styles.navbar}
                         />
                         <Divider />

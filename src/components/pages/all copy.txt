@@ -1,0 +1,18 @@
+{
+    "1": {
+        "title": "Heavy Weight Chest Pushes",
+        "subtitle": "5 Exercises To Build Pec Strength",
+        "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/man-doing-dumbbell-incline-bench-press-workout-royalty-free-image-522600373-1540485179.png?crop=0.671xw:1.00xh;0.166xw,0&resize=480:*"
+    },
+    "2": {
+        "title": "Whatever",
+        "subtitle": "Just a test",
+        "image": "https://elements-video-cover-images-0.imgix.net/files/6cab8c7d-7044-4087-9cf4-7fbd67186250/inline_image_preview.jpg?auto=compress&crop=edges&fit=crop&fm=jpeg&h=800&w=1200&s=922d74a7db44758023fb848be54497d4"
+    },
+    "3": {
+        "title": "Blah Blah Blah",
+        "subtitle": "helllooooooo",
+        "image": "https://elements-video-cover-images-0.imgix.net/files/6cab8c7d-7044-4087-9cf4-7fbd67186250/inline_image_preview.jpg?auto=compress&crop=edges&fit=crop&fm=jpeg&h=800&w=1200&s=922d74a7db44758023fb848be54497d4"
+    }
+}
+

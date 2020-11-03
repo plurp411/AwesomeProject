@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     borderRadius: 5,
     overflow: 'hidden',
-    borderColor: 'rgb(225, 225, 225)',
-    borderWidth: 1
+    // borderColor: 'rgb(225, 225, 225)',
+    // borderWidth: 1
   }
 });
 
@@ -97,8 +97,8 @@ export default class MarkdownTest extends Component {
 
 
 
-    // fetch(mdPath)
-    fetch('https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.md')
+    fetch(mdPath)
+    // fetch('https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.md')
       .then(response => {
         return response.text()
       })

@@ -103,8 +103,8 @@ export default class Workout extends Component {
   }
 
   iconView() {
-    const iconSize = 25
-    const { pageId } = this.props
+    const iconSize = 24
+    const { info, pageId } = this.props
     return (
       <View style={styles.iconsView}>
 
@@ -119,6 +119,8 @@ export default class Workout extends Component {
 
         <ShareMenu
           iconSize={iconSize}
+          info={info}
+          pageId={pageId}
         />
 
       </View>
