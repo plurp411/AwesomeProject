@@ -98,7 +98,7 @@ export default class BookmarksScreen extends Component {
                   this.props.navigation.navigate('Explore')
                 }
               >
-                Explore Things
+                Explore
               </Button>
             </View>
 

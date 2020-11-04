@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView, StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Input, Text, Icon, Button, Divider, ButtonGroup } from '@ui-kitten/components';
+import { Input, Text, Icon, Button, Spinner, ButtonGroup } from '@ui-kitten/components';
 
 const InputLabel = (props) => {
   return (
@@ -19,6 +19,12 @@ const ErrorText = (props) => {
   )
 }
 
+const LoadingIndicator = (props) => (
+  <View style={[props.style, styles.indicator]}>
+    <Spinner size='small' status='basic'/>
+  </View>
+);
+
 // const AlertIcon = (props) => (
 //   <Icon {...props} name='alert-circle-outline'/>
 // )
@@ -31,12 +37,14 @@ export default class LoginScreen extends Component {
         email: '',
         password: '',
         // errorText: 'This is an invalid email.',
-        errorText: '',
+        // errorText: '',
         secureTextEntry: true,
         isLogin: true,
       }
       this.toggleSecureEntry = this.toggleSecureEntry.bind(this)
       this.renderIcon = this.renderIcon.bind(this)
+      this.buttonGroupButtonText = this.buttonGroupButtonText.bind(this)
+      this.loginButtonText = this.loginButtonText.bind(this)
     }
   
     componentDidMount() {
@@ -69,10 +77,57 @@ export default class LoginScreen extends Component {
       return {}
     }
 
+    buttonGroupButtonText = (props) => {
+      const { text } = props
+      return (
+        <Text style={styles.buttonGroupButtonText}>
+          {text}
+        </Text>
+      )
+    }
+
+    loginButtonText = (props) => {
+      const { isLogin } = this.state
+      const { isLoading } = this.props
+
+      if (isLoading) {
+        return (
+          <LoadingIndicator />
+        )
+      }
+
+      return (
+        <Text style={styles.loginButtonText}>
+          {
+            isLogin &&
+            <>
+              Login
+            </>
+          }
+          {
+            !isLogin &&
+            <>
+              Create Account
+            </>
+          }
+        </Text>
+      )
+    }
+
     render() {
-      const { email, password, errorText, secureTextEntry, isLogin } = this.state
+      const { email, password, secureTextEntry, isLogin } = this.state
+      const { handleLogin, errorText, isLoading } = this.props
       return (
         <SafeAreaView style={styles.safeView}>
+
+          <Text
+            style={styles.title}
+            category='h1'
+          >
+            Hello,
+            <br></br>
+            Welcome.
+          </Text>
           
           <View style={styles.outerView}>
 
@@ -84,22 +139,16 @@ export default class LoginScreen extends Component {
               <Button
                 style={[styles.buttonGroupButton, this.getButtonGroupButtonColor(true)]}
                 onPress={() => this.setState({ isLogin: true })}
-                disabled={isLogin}
-              >
-                <Text style={styles.buttonGroupButtonText}>
-                  Login
-                </Text>
-              </Button>
+                disabled={isLogin || isLoading}
+                children={<this.buttonGroupButtonText text='Login'/>}
+              />
               
               <Button
                 style={[styles.buttonGroupButton, this.getButtonGroupButtonColor(false)]}
                 onPress={() => this.setState({ isLogin: false })}
-                disabled={!isLogin}
-              >
-                <Text style={styles.buttonGroupButtonText}>
-                  Create Account
-                </Text>
-              </Button>
+                disabled={!isLogin || isLoading}
+                children={<this.buttonGroupButtonText text='Create Account'/>}
+              />
             </ButtonGroup>
 
             <View style={styles.inputsView}>
@@ -111,6 +160,7 @@ export default class LoginScreen extends Component {
                 label={<InputLabel text="Email" />}
                 value={email}
                 onChangeText={nextValue => this.setState({ email: nextValue })}
+                disabled={isLoading}
               />
 
               <Input
@@ -121,6 +171,7 @@ export default class LoginScreen extends Component {
                 accessoryRight={this.renderIcon}
                 secureTextEntry={secureTextEntry}
                 caption=''
+                disabled={isLoading}
               />
               
               {
@@ -143,24 +194,13 @@ export default class LoginScreen extends Component {
             </View>
 
             <Button
-                style={styles.loginButton}
-                // disabled={email.length <= 0 || password.length <= 0}
-              >
-                <Text style={styles.loginButtonText}>
-                  {
-                    isLogin &&
-                    <>
-                      Login
-                    </>
-                  }
-                  {
-                    !isLogin &&
-                    <>
-                      Create Account
-                    </>
-                  }
-                </Text>
-            </Button>
+              style={styles.loginButton}
+              // disabled={email.length <= 0 || password.length <= 0}
+              children={this.loginButtonText}
+              onPress={() => !isLoading && email && password && handleLogin(email, password, isLogin)}
+              // disabled={isLoading}
+              // accessoryLeft={isLoading && LoadingIndicator}
+            />
           </View>
 
         </SafeAreaView>
@@ -172,6 +212,12 @@ const styles = StyleSheet.create({
   safeView: {
     flex: 1,
     backgroundColor: 'rgb(245, 245, 245)',
+  },
+  title: {
+    // alignSelf: 'center',
+    fontWeight: 700,
+    padding: 20,
+    position: 'absolute',
   },
   outerView: {
     marginVertical: 'auto',
@@ -233,6 +279,10 @@ const styles = StyleSheet.create({
   loginButtonText: {
     fontWeight: 600,
     color: 'rgb(255, 255, 255)',
+  },
+  indicator: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

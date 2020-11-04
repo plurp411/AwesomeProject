@@ -7,6 +7,7 @@ import PageScreen from './src/components/PageScreen';
 import ExploreScreen from './src/components/ExploreScreen';
 import SearchScreen from './src/components/SearchScreen';
 import BookmarksScreen from './src/components/BookmarksScreen';
+import CreateScreen from './src/components/CreateScreen';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -59,6 +60,10 @@ const SearchIcon = (props) => (
   <Icon {...props} name='search-outline'/>
 );
 
+const CreateIcon = (props) => (
+  <Icon {...props} name='plus-square-outline'/>
+);
+
 const BookmarksIcon = (props) => (
   <Icon {...props} name='bookmark-outline'/>
 );
@@ -73,9 +78,10 @@ const BottomTabBar = ({ navigation, state }) => (
       onSelect={index => navigation.navigate(state.routeNames[index])}
       style={styles.tabBar}
     >
-      <BottomNavigationTab title='Bookmarks' icon={BookmarksIcon}/>
       <BottomNavigationTab title='Explore' icon={ExploreIcon}/>
       <BottomNavigationTab title='Search' icon={SearchIcon}/>
+      <BottomNavigationTab title='Create' icon={CreateIcon}/>
+      <BottomNavigationTab title='Bookmarks' icon={BookmarksIcon}/>
     </BottomNavigation>
   </>
 );
@@ -115,6 +121,26 @@ function SearchStackNavigator() {
         component={PageScreen}
         options={{ title: '' }}
       />  
+
+    </Stack.Navigator>
+  );
+}
+
+function CreateStackNavigator() {
+  return (
+    <Stack.Navigator headerMode='none'>
+
+      <Stack.Screen
+        name="Create"
+        component={CreateScreen}
+        options={{ title: 'Create' }}
+      />
+
+      {/* <Stack.Screen
+        name="Page"
+        component={PageScreen}
+        options={{ title: '' }}
+      />   */}
 
     </Stack.Navigator>
   );
@@ -162,9 +188,10 @@ class TabNavigator extends Component {
   render() {
       return (
         <Navigator tabBar={props => <BottomTabBar {...props} />}>
-          <Screen name='Bookmarks' component={BookmarksStackNavigator}/>
           <Screen name='Explore' component={ExploreStackNavigator}/>
           <Screen name='Search' component={SearchStackNavigator}/>
+          <Screen name='Create' component={CreateStackNavigator}/>
+          <Screen name='Bookmarks' component={BookmarksStackNavigator}/>
         </Navigator>
       )
     }
@@ -219,26 +246,18 @@ export default class extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isSignedIn: null
+      isSignedIn: null,
+      email: '',
+      password: '',
+      isLoading: false,
+      errorText: '',
     }
+    this.handleLogin = this.handleLogin.bind(this)
+    this.handleCreateUser = this.handleCreateUser.bind(this)
+    this.handleLoginUser = this.handleLoginUser.bind(this)
   }
 
   componentDidMount() {
-
-    // const email = 'plurp911@gmail.com'
-    // const password = 'LOSER_13io'
-
-    // firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
-    //   console.log('success')
-    // }).catch(function(error) {
-    //   // Handle Errors here.
-    //   var errorCode = error.code;
-    //   var errorMessage = error.message;
-    //   console.log('error')
-    //   console.log(errorCode)
-    //   console.log(errorMessage)
-    //   // ...
-    // });
 
     let _this = this;
 
@@ -278,8 +297,74 @@ export default class extends Component {
 
   }
 
+  handleLogin(email, password, isLogin) {
+
+    this.setState({
+      email: email,
+      password: password,
+      errorText: '',
+      isLoading: true,
+    })
+
+    if (isLogin) {
+      this.handleLoginUser()
+    } else {
+      this.handleCreateUser()
+    }
+  }
+
+  handleLoginUser() {
+    const { email, password } = this.state
+    let _this = this
+
+    firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
+
+      console.log('success')
+
+      _this.setState({
+        isLoading: false,
+      })
+
+    }).catch(function(error) {
+
+      var errorCode = error.code;
+      var errorMessage = error.message;
+
+      _this.setState({
+        errorText: errorMessage,
+        isLoading: false,
+      })
+      
+    });
+  }
+
+  handleCreateUser() {
+    const { email, password } = this.state
+    let _this = this
+
+    firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
+
+      console.log('success')
+
+      _this.setState({
+        isLoading: false,
+      })
+
+    }).catch(function(error) {
+
+      var errorCode = error.code;
+      var errorMessage = error.message;
+
+      _this.setState({
+        errorText: errorMessage,
+        isLoading: false,
+      })
+
+    });
+  }
+
   render() {
-    const { isSignedIn } = this.state
+    const { isSignedIn, errorText, isLoading } = this.state
     return (
       <>
         <IconRegistry icons={EvaIconsPack} />
@@ -313,11 +398,16 @@ export default class extends Component {
           }
 
           {
-            !isSignedIn &&
+            isSignedIn != null && !isSignedIn &&
 
-            <LoginScreen />
-
+            <LoginScreen
+              handleLogin={this.handleLogin}
+              errorText={errorText}
+              isLoading={isLoading}
+            />
           }
+
+          
 
 
 
