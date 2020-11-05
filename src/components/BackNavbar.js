@@ -117,7 +117,8 @@ export default class BackNavbar extends Component {
     // }
 
     render() {
-        const { info } = this.props
+        // const { info } = this.props
+        const { title } = this.props
         return (
             <>
                 {/* {canGoBack && */}
@@ -126,8 +127,9 @@ export default class BackNavbar extends Component {
                             alignment="center"
                             accessoryLeft={BackAction}
                             // accessoryRight={ShareAction}
-                            accessoryRight={this.rightArea}
-                            title={info.title}
+                            // accessoryRight={this.rightArea}
+                            // title={info.title}
+                            title={title}
                             style={styles.navbar}
                         />
                         <Divider />

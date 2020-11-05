@@ -3,9 +3,9 @@ import BackNavbar from './BackNavbar';
 import MarkdownFile from './MarkdownFile';
 import { Divider } from '@ui-kitten/components';
 import PageTitling from './PageTitling';
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import IconsBar from './IconsBar';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Bookmark from '../Bookmark';
 
 // const navigateBack = () => {
 //   navigation.goBack();
@@ -50,9 +50,10 @@ class PageScreen extends Component {
         <>
 
           <BackNavbar
-            info={info}
-            pageId={pageId}
-            triggerReload={triggerReload}
+            // info={info}
+            // pageId={pageId}
+            // triggerReload={triggerReload}
+            title={info.title}
           />
 
         {/* <Layout> */}
@@ -65,15 +66,24 @@ class PageScreen extends Component {
             {/* <View style={{flex: 1}}> */}
                 <ScrollView>
             
-                        {info && 
-                            <>
-                                <PageTitling
-                                    title={info.title}
-                                    subtitle={info.subtitle}
-                                />
-                                <Divider />
-                            </>
-                        }
+                    {info && 
+                        <>
+                            <PageTitling
+                                title={info.title}
+                                subtitle={info.subtitle}
+                            />
+                            <Divider />
+                        </>
+                    }
+
+                    <View style={styles.iconsBarView}>
+                      <IconsBar
+                        info={info}
+                        pageId={pageId}
+                      />
+                    </View>
+
+                    <Divider />
 
                     {/* {info && <Navbar title={info.title} />} */}
             
@@ -93,8 +103,11 @@ class PageScreen extends Component {
 const styles = StyleSheet.create({
   safeView: {
     flex: 1,
-    backgroundColor: 'rgb(245, 245, 245)',
-  }
+    backgroundColor: 'rgb(255, 255, 255)',
+  },
+  iconsBarView: {
+    margin: 10,
+  },
 });
 
 export default function(props) {

@@ -8,6 +8,8 @@ import ExploreScreen from './src/components/ExploreScreen';
 import SearchScreen from './src/components/SearchScreen';
 import BookmarksScreen from './src/components/BookmarksScreen';
 import CreateScreen from './src/components/CreateScreen';
+import CreateScreenFinal from './src/components/CreateScreenFinal';
+import AccountScreen from './src/components/AccountScreen'
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -23,7 +25,7 @@ import * as firebase from 'firebase';
 
 // Optionally import the services that you want to use
 import "firebase/auth";
-//import "firebase/database";
+import "firebase/database";
 //import "firebase/firestore";
 //import "firebase/functions";
 //import "firebase/storage";
@@ -42,6 +44,11 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+let database = firebase.database();
+
+firebase.database.enableLogging(function(message) {
+  console.log("[FIREBASE]", message);
+});
 
 
 
@@ -68,6 +75,10 @@ const BookmarksIcon = (props) => (
   <Icon {...props} name='bookmark-outline'/>
 );
 
+const AccountIcon = (props) => (
+  <Icon {...props} name='person-outline'/>
+);
+
 const BottomTabBar = ({ navigation, state }) => (
   <>
     <Divider />
@@ -78,10 +89,19 @@ const BottomTabBar = ({ navigation, state }) => (
       onSelect={index => navigation.navigate(state.routeNames[index])}
       style={styles.tabBar}
     >
-      <BottomNavigationTab title='Explore' icon={ExploreIcon}/>
+
+      {/* <BottomNavigationTab title='Explore' icon={ExploreIcon}/>
       <BottomNavigationTab title='Search' icon={SearchIcon}/>
       <BottomNavigationTab title='Create' icon={CreateIcon}/>
       <BottomNavigationTab title='Bookmarks' icon={BookmarksIcon}/>
+      <BottomNavigationTab title='Account' icon={AccountIcon}/> */}
+
+      <BottomNavigationTab icon={ExploreIcon}/>
+      <BottomNavigationTab icon={SearchIcon}/>
+      <BottomNavigationTab icon={CreateIcon}/>
+      <BottomNavigationTab icon={BookmarksIcon}/>
+      <BottomNavigationTab icon={AccountIcon}/>
+
     </BottomNavigation>
   </>
 );
@@ -126,7 +146,7 @@ function SearchStackNavigator() {
   );
 }
 
-function CreateStackNavigator() {
+function CreateStackNavigator_() {
   return (
     <Stack.Navigator headerMode='none'>
 
@@ -136,11 +156,11 @@ function CreateStackNavigator() {
         options={{ title: 'Create' }}
       />
 
-      {/* <Stack.Screen
-        name="Page"
-        component={PageScreen}
-        options={{ title: '' }}
-      />   */}
+      <Stack.Screen
+        name="CreateFinal"
+        component={CreateScreenFinal}
+        options={{ title: 'Submit' }}
+      />  
 
     </Stack.Navigator>
   );
@@ -161,6 +181,26 @@ function BookmarksStackNavigator() {
         component={PageScreen}
         options={{ title: '' }}
       />  
+
+    </Stack.Navigator>
+  );
+}
+
+function AccountStackNavigator() {
+  return (
+    <Stack.Navigator headerMode='none'>
+
+      <Stack.Screen
+        name="Account"
+        component={AccountScreen}
+        options={{ title: 'Account' }}
+      />
+
+      {/* <Stack.Screen
+        name="Page"
+        component={PageScreen}
+        options={{ title: '' }}
+      />   */}
 
     </Stack.Navigator>
   );
@@ -190,8 +230,9 @@ class TabNavigator extends Component {
         <Navigator tabBar={props => <BottomTabBar {...props} />}>
           <Screen name='Explore' component={ExploreStackNavigator}/>
           <Screen name='Search' component={SearchStackNavigator}/>
-          <Screen name='Create' component={CreateStackNavigator}/>
+          <Screen name='Create' component={CreateStackNavigator_}/>
           <Screen name='Bookmarks' component={BookmarksStackNavigator}/>
+          <Screen name='Account' component={AccountStackNavigator}/>
         </Navigator>
       )
     }

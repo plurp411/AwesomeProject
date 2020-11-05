@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Text, Icon } from '@ui-kitten/components';
+import { Text, Divider } from '@ui-kitten/components';
 import { StyleSheet, Image, View, TouchableWithoutFeedback } from 'react-native';
 // import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ShareMenu from './ShareMenu';
 // import Bookmark from '../Bookmark';
 import BookmarkButton from './BookmarkButton';
+import IconsBar from './IconsBar';
 
 // const getBookmarksData = async () => {
 //   try {
@@ -156,7 +157,17 @@ export default class Workout extends Component {
                 {info.subtitle}
               </Text>
 
-              <this.iconView />
+              <Divider style={styles.divider} />
+
+              {/* <this.iconView /> */}
+
+              <View style={styles.iconsBarView}>
+                <IconsBar
+                  info={info}
+                  pageId={pageId}
+                />
+              </View>
+
 
             </View>
 
@@ -200,25 +211,33 @@ const styles = StyleSheet.create({
     color: 'rgb(170, 170, 170)',
     paddingLeft: 5,
   },
-  iconsView: {
-    flex: 1,
-    flexDirection: 'row-reverse',
+  // iconsView: {
+  //   flex: 1,
+  //   flexDirection: 'row-reverse',
+  //   marginTop: 5,
+  // },
+  // iconButton: {
+  //   width: 25,
+  //   height: 25,
+  // },
+  // iconView: {
+  //   width: 25,
+  //   height: 25,
+  // },
+  // icon: {
+  //   width: 25,
+  //   height: 25,
+  // },
+  // shareView: {
+  //   marginRight: 5,
+  // },
+  divider: {
+    marginHorizontal: -10,
+    marginTop: 10,
+    marginBottom: 5,
+  },
+  iconsBarView: {
     marginTop: 5,
-  },
-  iconButton: {
-    width: 25,
-    height: 25,
-  },
-  iconView: {
-    width: 25,
-    height: 25,
-  },
-  icon: {
-    width: 25,
-    height: 25,
-  },
-  shareView: {
-    marginRight: 5,
   },
 });
 

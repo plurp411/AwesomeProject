@@ -31,7 +31,8 @@ export default class BookmarkButton extends Component {
         this.setState({
             iconStyle: {
                 width: iconSize,
-                height: iconSize
+                height: iconSize,
+                cursor: 'pointer',
             }
         })
         // this.updateBookmarkState()
@@ -78,7 +79,7 @@ export default class BookmarkButton extends Component {
         // console.log('-0-' + GLOBAL.exploreScreen.state.bookmarks)
 
         return (
-            <Icon {...props} name={this.getBookmarkIconText(bookmarks)} style={iconStyle} />
+            <Icon {...props} name={this.getBookmarkIconText(bookmarks)} style={iconStyle} fill='#454545' />
         )
     }
 

@@ -23,32 +23,39 @@ export default class CreateInput extends Component {
     constructor(props) {
       super(props)
       this.state = {
-        value: '',
+        // value: '',
       }
     }
   
     componentDidMount() {
-      
+      // const { value, updateValue, stateName } = this.props
+      const { info, updateValue } = this.props
+      updateValue(info.stateName, info.value)
+      // this.setState({ value: value })
     }
 
     render() {
-      const { labelText, errorText, stateName, updateValue, isFirst, isLast } = this.props
-      const { value } = this.state
+      // const { value, labelText, errorText, stateName, updateValue, isFirst, isLast, multiline } = this.props
+      // const { value } = this.props
+      const { info, isFirst, isLast, updateValue } = this.props
+      console.log(info)
       return (
-        <>
+        // <>
           <Input
             placeholder=''
-            label={<InputLabel text={labelText} />}
-            value={value}
+            label={<InputLabel text={info.labelText} />}
+            value={info.value}
             onChangeText={ (nextValue) => {
-              this.setState({ value: nextValue })
-              updateValue(stateName, value)
+              // this.setState({ value: nextValue })
+              updateValue(info.stateName, nextValue)
             }}
-            caption={<ErrorText text={errorText} />}
-            style={ [styles.input, isFirst && styles.isFirst, isLast && styles.isLast] }
+            caption={<ErrorText text={info.errorText} />}
+            style={ [styles.input, isFirst && styles.isFirst, isLast && styles.isLast , info.isMultiline && styles.isMultiline] }
             // disabled={isLoading}
+            multiline={info.isMultiline}
+            numberOfLines={15}
           />
-        </>
+        // </>
       )
     }
 }
@@ -72,6 +79,9 @@ const styles = StyleSheet.create({
   },
   isLast: {
     marginBottom: '-4px',
+  },
+  isMultiline: {
+    // minHeight: 100,
   },
 });
 

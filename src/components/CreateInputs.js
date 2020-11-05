@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Text, Button, Input } from '@ui-kitten/components';
-import Navbar from './Navbar';
+import { Text, Divider } from '@ui-kitten/components';
 import CreateInput from './CreateInput';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-export default class CreateScreen extends Component {
+export default class CreateInputs extends Component {
 
     constructor(props) {
       super(props)
@@ -25,29 +24,41 @@ export default class CreateScreen extends Component {
         createInputs: createInputs
       })
 
-      const { updateInputs, inputsStateName } = this.props
-      const updatedCreateInputs = this.state.createInputs
-      updateInputs(inputsStateName, updatedCreateInputs)
+      // const { updateInputs, inputsStateName } = this.props
+      // const updatedCreateInputs = this.state.createInputs
+      // updateInputs(inputsStateName, updatedCreateInputs)
     }
 
     render() {
       const { createInputs } = this.state
-      const { title } = this.props
+      const { title, isNotLast } = this.props
       return (          
-        <View style={styles.outerView}>
+        <View style={[styles.outerView, isNotLast && styles.isNotLast ]}>
+
+          <Text style={styles.title}>
+            {title}
+          </Text>
+
+          <Divider style={styles.divider}/>
 
           {
-            createInputs && Object.keys(createInputs).map((key, index) => ( 
-              <CreateInput
-                key={key}
-                stateName={key}
-                labelText={createInputs[key].labelText}
-                errorText={createInputs[key].errorText}
-                updateValue={this.updateValue}
-                isFirst={index == 0}
-                isLast={index == Object.keys(createInputs).length - 1}
-              />
-            ))
+            createInputs && Object.keys(createInputs).map((key, index) => {
+              let infoDict = createInputs[key]
+              infoDict['stateName'] = key
+              return ( 
+                <CreateInput
+                  key={key}
+                  // stateName={key}
+                  // labelText={createInputs[key].labelText}
+                  // errorText={createInputs[key].errorText}
+                  info={infoDict}
+                  updateValue={this.updateValue}
+                  // value={createInputs[key].value || ''}
+                  isFirst={index == 0}
+                  isLast={index == Object.keys(createInputs).length - 1}
+                />
+              )
+            })
           }
 
         </View>
@@ -62,6 +73,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(255, 255, 255)',
     borderRadius: 10,
     overflow: 'hidden',
+  },
+  isNotLast: {
+    marginBottom: 0,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 600,
+    alignSelf: 'center',
+  },
+  divider: {
+    marginVertical: 10,
+    marginHorizontal: -10,
   },
 });
 
