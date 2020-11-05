@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   emptyText: {
     margin: 'auto',
     color: 'rgb(150, 150, 150)',
-    fontWeight: 500,
+    fontWeight: 600,
   },
 });
 

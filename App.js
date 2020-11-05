@@ -15,40 +15,40 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab, Icon, Divider } from '@ui-kitten/components';
-import GLOBAL from './src/global'
-import Bookmark from './src/Bookmark'
 import LoginScreen from './src/components/LoginScreen';
+import Firebase from './src/Firebase';
+import Like from './src/Like';
 
+let firebase = Firebase.start()
 
+// import * as firebase from 'firebase';
 
-import * as firebase from 'firebase';
+// // Optionally import the services that you want to use
+// import "firebase/auth";
+// import "firebase/database";
+// //import "firebase/firestore";
+// //import "firebase/functions";
+// //import "firebase/storage";
 
-// Optionally import the services that you want to use
-import "firebase/auth";
-import "firebase/database";
-//import "firebase/firestore";
-//import "firebase/functions";
-//import "firebase/storage";
+// // Initialize Firebase
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCccYsv-qFz0HAExhRXPGu2TDStRQhG8_o",
+//   authDomain: "workouts-1f2c7.firebaseapp.com",
+//   databaseURL: "https://workouts-1f2c7.firebaseio.com",
+//   projectId: "workouts-1f2c7",
+//   storageBucket: "workouts-1f2c7.appspot.com",
+//   messagingSenderId: "78808038586",
+//   appId: "1:78808038586:web:f77a49c55e962350e01683",
+//   measurementId: "G-E4MCYXXCYK"
+// };
 
-// Initialize Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyCccYsv-qFz0HAExhRXPGu2TDStRQhG8_o",
-  authDomain: "workouts-1f2c7.firebaseapp.com",
-  databaseURL: "https://workouts-1f2c7.firebaseio.com",
-  projectId: "workouts-1f2c7",
-  storageBucket: "workouts-1f2c7.appspot.com",
-  messagingSenderId: "78808038586",
-  appId: "1:78808038586:web:f77a49c55e962350e01683",
-  measurementId: "G-E4MCYXXCYK"
-};
+// firebase.initializeApp(firebaseConfig);
 
-firebase.initializeApp(firebaseConfig);
+// let database = firebase.database();
 
-let database = firebase.database();
-
-firebase.database.enableLogging(function(message) {
-  console.log("[FIREBASE]", message);
-});
+// firebase.database.enableLogging(function(message) {
+//   console.log("[FIREBASE]", message);
+// });
 
 
 
@@ -76,7 +76,8 @@ const BookmarksIcon = (props) => (
 );
 
 const AccountIcon = (props) => (
-  <Icon {...props} name='person-outline'/>
+  // <Icon {...props} name='person-outline'/>
+  <Icon {...props} name='settings-outline'/>
 );
 
 const BottomTabBar = ({ navigation, state }) => (
@@ -294,8 +295,8 @@ export default class extends Component {
       errorText: '',
     }
     this.handleLogin = this.handleLogin.bind(this)
-    this.handleCreateUser = this.handleCreateUser.bind(this)
-    this.handleLoginUser = this.handleLoginUser.bind(this)
+    // this.handleCreateUser = this.handleCreateUser.bind(this)
+    // this.handleLoginUser = this.handleLoginUser.bind(this)
   }
 
   componentDidMount() {
@@ -306,16 +307,19 @@ export default class extends Component {
       if (user) {
 
         // User is signed in.
-        var displayName = user.displayName;
-        var email = user.email;
-        var emailVerified = user.emailVerified;
-        var photoURL = user.photoURL;
-        var isAnonymous = user.isAnonymous;
-        var uid = user.uid;
-        var providerData = user.providerData;
+
+        // var displayName = user.displayName;
+        // var email = user.email;
+        // var emailVerified = user.emailVerified;
+        // var photoURL = user.photoURL;
+        // var isAnonymous = user.isAnonymous;
+        // var uid = user.uid;
+        // var providerData = user.providerData;
 
         console.log('good')
         console.log(user)
+
+        Firebase.user = user
 
         _this.setState({
           isSignedIn: true
@@ -333,12 +337,14 @@ export default class extends Component {
         _this.setState({
           isSignedIn: false
         })
+
+        // Like.getLikesData()
       }
     });
 
   }
 
-  handleLogin(email, password, isLogin) {
+  async handleLogin(email, password, isLogin) {
 
     this.setState({
       email: email,
@@ -348,60 +354,32 @@ export default class extends Component {
     })
 
     if (isLogin) {
-      this.handleLoginUser()
+      // this.handleLoginUser()
+
+      const errorText = await Firebase.handleLoginUser(email, password)
+      this.setState({
+        errorText: errorText,
+        isLoading: false,
+      })
+
+      if (errorText == '') {
+        this.setState({ isSignedIn: true })
+      }
+
     } else {
-      this.handleCreateUser()
-    }
-  }
+      // this.handleCreateUser()
 
-  handleLoginUser() {
-    const { email, password } = this.state
-    let _this = this
-
-    firebase.auth().signInWithEmailAndPassword(email, password).then(() => {
-
-      console.log('success')
-
-      _this.setState({
+      const errorText = await Firebase.handleCreateUser(email, password)
+      this.setState({
+        errorText: errorText,
         isLoading: false,
       })
 
-    }).catch(function(error) {
-
-      var errorCode = error.code;
-      var errorMessage = error.message;
-
-      _this.setState({
-        errorText: errorMessage,
-        isLoading: false,
-      })
+      if (errorText == '') {
+        this.setState({ isSignedIn: true })
+      }
       
-    });
-  }
-
-  handleCreateUser() {
-    const { email, password } = this.state
-    let _this = this
-
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(() => {
-
-      console.log('success')
-
-      _this.setState({
-        isLoading: false,
-      })
-
-    }).catch(function(error) {
-
-      var errorCode = error.code;
-      var errorMessage = error.message;
-
-      _this.setState({
-        errorText: errorMessage,
-        isLoading: false,
-      })
-
-    });
+    }
   }
 
   render() {

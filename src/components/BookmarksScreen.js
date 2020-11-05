@@ -4,6 +4,7 @@ import Workout from './Workout';
 import Navbar from './Navbar';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import Bookmark from '../Bookmark';
+import Like from '../Like';
 import GLOBAL from '../global'
 
 export default class BookmarksScreen extends Component {
@@ -13,6 +14,7 @@ export default class BookmarksScreen extends Component {
       this.state = {
         info: null,
         bookmarks: null,
+        likes: null,
       }
     }
   
@@ -36,6 +38,7 @@ export default class BookmarksScreen extends Component {
     onScreenFocus = () => {
       GLOBAL.exploreScreen = this
       Bookmark.getBookmarksData()
+      Like.refreshState()
       console.log('BOOKMARKS focus')
     }
 
@@ -46,7 +49,12 @@ export default class BookmarksScreen extends Component {
         console.log('aslkdjfhgaslkdjfhas')
         return null
       }
+      
+      console.log('GLOBAL.exploreScreen.state')
+      console.log(GLOBAL.exploreScreen.state)
+
       const { bookmarks } = GLOBAL.exploreScreen.state
+      let isFirst = true
       return (
         <SafeAreaView style={styles.safeView}>
 
@@ -69,11 +77,14 @@ export default class BookmarksScreen extends Component {
                       <Workout
                         info={info[key]}
                         pageId={key}
-                        isFirst={index == 0}
+                        isFirst={isFirst}
                         navigation={navigation}
                         // handleBookmark={this.handleBookmark}
                         // isBookmarked={bookmarks.includes(key)}
                       />
+                    }
+                    {
+                      bookmarks.includes(key) && isFirst ? isFirst = false : null
                     }
                   </React.Fragment>
                 ))
@@ -83,7 +94,8 @@ export default class BookmarksScreen extends Component {
           }
 
           {
-            (!info || bookmarks.length <= 0) && 
+            // (!info || bookmarks.length <= 0) &&
+            bookmarks.length <= 0 &&
 
             <View style={styles.emptyView}>
               <Text style={styles.emptyText}>
@@ -93,13 +105,16 @@ export default class BookmarksScreen extends Component {
               <Button
                 style={styles.exploreButton}
                 size='small'
-                appearance='outline'
+                // appearance='outline'
                 onPress={() =>
                   this.props.navigation.navigate('Explore')
                 }
-              >
-                Explore
-              </Button>
+                children={
+                  <Text style={styles.exploreButtonText}>
+                    Explore
+                  </Text>
+                }
+              />
             </View>
 
           }
@@ -135,12 +150,19 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     color: 'rgb(150, 150, 150)',
-    fontWeight: 500,
+    fontWeight: 600,
   },
   exploreButton: {
     marginTop: 15,
     borderRadius: 999,
+    // borderRadius: 10,
     overflow: 'hidden',
+  },
+  exploreButtonText: {
+    fontWeight: 600,
+    fontSize: 14,
+    color: 'rgb(255, 255, 255)',
+    height: 35,
   },
 });
 

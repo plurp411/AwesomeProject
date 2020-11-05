@@ -3,6 +3,10 @@ import { SafeAreaView, StyleSheet, View, TouchableWithoutFeedback } from 'react-
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Input, Text, Icon, Button, Spinner, ButtonGroup } from '@ui-kitten/components';
 
+const LoginIcon = (props) => (
+  <Icon {...props} name='log-in-outline' fill='#ffffff' />
+);
+
 const InputLabel = (props) => {
   return (
     <Text style={styles.inputLabel}>
@@ -200,6 +204,7 @@ export default class LoginScreen extends Component {
               onPress={() => !isLoading && email && password && handleLogin(email, password, isLogin)}
               // disabled={isLoading}
               // accessoryLeft={isLoading && LoadingIndicator}
+              // accessoryRight={ isLogin && LoginIcon }
             />
           </View>
 

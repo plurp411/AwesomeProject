@@ -7,6 +7,7 @@ import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import Bookmark from '../Bookmark';
 import GLOBAL from '../global'
+import Like from '../Like';
 
 export default class ExploreScreen extends Component {
 
@@ -16,6 +17,7 @@ export default class ExploreScreen extends Component {
         // workoutIds: ['1', '2', '3']
         info: null,
         bookmarks: null,
+        likes: null,
       }
       // this.handleBookmark = this.handleBookmark.bind(this)
       // this.getBookmarksData = this.getBookmarksData.bind(this)
@@ -55,6 +57,7 @@ export default class ExploreScreen extends Component {
     onScreenFocus = () => {
       GLOBAL.exploreScreen = this
       Bookmark.getBookmarksData()
+      Like.getLikesData()
       console.log('EXPLORE focus')
     }
 

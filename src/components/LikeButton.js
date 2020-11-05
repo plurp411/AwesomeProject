@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, Icon } from '@ui-kitten/components';
 import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
-// import Bookmark from '../Bookmark';
+import Like from '../Like';
 import GLOBAL from '../global.js'
 
 export default class LikeButton extends Component {
@@ -27,32 +27,35 @@ export default class LikeButton extends Component {
         })
     }
 
-    getHeartIconText(bookmarks) {
-        // const { pageId } = this.props
-        // const isBookmarked = bookmarks.includes(pageId)
+    getHeartIconText(likes) {
+        if (likes == null) {
+            return 'heart-outline'
+        }
+        const { pageId } = this.props
+        const isLiked = likes.includes(pageId)
         let result = 'heart'
-        // if (isBookmarked) {
-        //   return result
-        // }
+        if (isLiked) {
+          return result
+        }
         return result + '-outline'
     }
 
     heartIcon(props) {
         const { iconStyle } = this.state
-        // const { bookmarks } = GLOBAL.exploreScreen.state
+        const { likes } = GLOBAL.exploreScreen.state
         return (
-            <Icon {...props} name={this.getHeartIconText()} style={iconStyle} fill='#e65050' />
+            <Icon {...props} name={ this.getHeartIconText(likes) } style={iconStyle} fill='#e65050' />
         )
     }
 
     handleLike() {
-        // const { pageId } = this.props
-        // Bookmark.handleBookmark(pageId)
-        // this.forceUpdate()
+        const { pageId } = this.props
+        Like.handleLike(pageId)
+        this.forceUpdate()
     }
 
     render() {
-        const { pageId } = this.props
+        // const { pageId } = this.props
         const { iconStyle } = this.state
         return (
             <View style={styles.view}>
