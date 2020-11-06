@@ -10,6 +10,8 @@ import BookmarksScreen from './src/components/BookmarksScreen';
 import CreateScreen from './src/components/CreateScreen';
 import CreateScreenFinal from './src/components/CreateScreenFinal';
 import AccountScreen from './src/components/AccountScreen'
+import CategoriesScreen from './src/components/CategoriesScreen';
+import CategoriesScreenFinal from './src/components/CategoriesScreenFinal';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -71,6 +73,10 @@ const CreateIcon = (props) => (
   <Icon {...props} name='plus-square-outline'/>
 );
 
+const CategoriesIcon = (props) => (
+  <Icon {...props} name='grid-outline'/>
+);
+
 const BookmarksIcon = (props) => (
   <Icon {...props} name='bookmark-outline'/>
 );
@@ -99,7 +105,8 @@ const BottomTabBar = ({ navigation, state }) => (
 
       <BottomNavigationTab icon={ExploreIcon}/>
       <BottomNavigationTab icon={SearchIcon}/>
-      <BottomNavigationTab icon={CreateIcon}/>
+      {/* <BottomNavigationTab icon={CreateIcon}/> */}
+      <BottomNavigationTab icon={CategoriesIcon}/>
       <BottomNavigationTab icon={BookmarksIcon}/>
       <BottomNavigationTab icon={AccountIcon}/>
 
@@ -147,20 +154,46 @@ function SearchStackNavigator() {
   );
 }
 
-function CreateStackNavigator_() {
+// function CreateStackNavigator_() {
+//   return (
+//     <Stack.Navigator headerMode='none'>
+
+//       <Stack.Screen
+//         name="Create"
+//         component={CreateScreen}
+//         options={{ title: 'Create' }}
+//       />
+
+//       <Stack.Screen
+//         name="CreateFinal"
+//         component={CreateScreenFinal}
+//         options={{ title: 'Submit' }}
+//       />  
+
+//     </Stack.Navigator>
+//   );
+// }
+
+function CategoriesStackNavigator() {
   return (
     <Stack.Navigator headerMode='none'>
 
       <Stack.Screen
-        name="Create"
-        component={CreateScreen}
-        options={{ title: 'Create' }}
+        name="Categories"
+        component={CategoriesScreen}
+        options={{ title: 'Categories' }}
       />
 
       <Stack.Screen
-        name="CreateFinal"
-        component={CreateScreenFinal}
-        options={{ title: 'Submit' }}
+        name="CategoriesFinal"
+        component={CategoriesScreenFinal}
+        options={{ title: '' }}
+      />
+
+      <Stack.Screen
+        name="Page"
+        component={PageScreen}
+        options={{ title: '' }}
       />  
 
     </Stack.Navigator>
@@ -231,7 +264,8 @@ class TabNavigator extends Component {
         <Navigator tabBar={props => <BottomTabBar {...props} />}>
           <Screen name='Explore' component={ExploreStackNavigator}/>
           <Screen name='Search' component={SearchStackNavigator}/>
-          <Screen name='Create' component={CreateStackNavigator_}/>
+          {/* <Screen name='Create' component={CreateStackNavigator_}/> */}
+          <Screen name='Categories' component={CategoriesStackNavigator}/>
           <Screen name='Bookmarks' component={BookmarksStackNavigator}/>
           <Screen name='Account' component={AccountStackNavigator}/>
         </Navigator>

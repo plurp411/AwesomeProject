@@ -1,20 +1,14 @@
 {
-    "1": {
-        "category": "testings",
+    "whatevers": {
         "title": "Testing some things out",
-        "subtitle": "Whatever this is",
         "image": "https://elements-video-cover-images-0.imgix.net/files/6cab8c7d-7044-4087-9cf4-7fbd67186250/inline_image_preview.jpg?auto=compress&crop=edges&fit=crop&fm=jpeg&h=800&w=1200&s=922d74a7db44758023fb848be54497d4"
     },
-    "2": {
-        "category": "testings",
+    "testings": {
         "title": "Whatever",
-        "subtitle": "Just a test",
         "image": "https://elements-video-cover-images-0.imgix.net/files/6cab8c7d-7044-4087-9cf4-7fbd67186250/inline_image_preview.jpg?auto=compress&crop=edges&fit=crop&fm=jpeg&h=800&w=1200&s=922d74a7db44758023fb848be54497d4"
     },
-    "3": {
-        "category": "whatevers",
+    "blahBlah": {
         "title": "Blah Blah Blah",
-        "subtitle": "helllooooooo",
         "image": "https://elements-video-cover-images-0.imgix.net/files/6cab8c7d-7044-4087-9cf4-7fbd67186250/inline_image_preview.jpg?auto=compress&crop=edges&fit=crop&fm=jpeg&h=800&w=1200&s=922d74a7db44758023fb848be54497d4"
     }
 }

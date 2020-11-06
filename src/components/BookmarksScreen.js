@@ -46,12 +46,12 @@ export default class BookmarksScreen extends Component {
       const { info } = this.state
       const { navigation } = this.props
       if (!GLOBAL.exploreScreen) {
-        console.log('aslkdjfhgaslkdjfhas')
+        // console.log('aslkdjfhgaslkdjfhas')
         return null
       }
       
-      console.log('GLOBAL.exploreScreen.state')
-      console.log(GLOBAL.exploreScreen.state)
+      // console.log('GLOBAL.exploreScreen.state')
+      // console.log(GLOBAL.exploreScreen.state)
 
       const { bookmarks } = GLOBAL.exploreScreen.state
       let isFirst = true

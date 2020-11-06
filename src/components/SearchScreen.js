@@ -5,6 +5,7 @@ import Workout from './Workout';
 import SearchBar from './SearchBar';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import Bookmark from '../Bookmark';
+import Like from '../Like';
 import GLOBAL from '../global'
 
 export default class SearchScreen extends Component {
@@ -15,6 +16,7 @@ export default class SearchScreen extends Component {
         info: null,
         foundInfo: null,
         bookmarks: null,
+        likes: null,
       }
       // GLOBAL.exploreScreen = this
       // Bookmark.getBookmarksData()
@@ -38,13 +40,15 @@ export default class SearchScreen extends Component {
           })
         })
 
-      GLOBAL.exploreScreen = this
-      Bookmark.getBookmarksData()
+      // GLOBAL.exploreScreen = this
+      // Bookmark.getBookmarksData()
     }
 
     onScreenFocus = () => {
       GLOBAL.exploreScreen = this
       Bookmark.getBookmarksData()
+      Like.refreshState()
+      console.log('SEARCH focus')
     }
 
     handleSearch(searchInput) {
