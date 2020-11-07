@@ -4,6 +4,25 @@ import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
 import Like from '../Like';
 import GLOBAL from '../global.js'
 
+function getHeartIconText(isLiked) {
+    if (isLiked == null) {
+        return 'heart-outline'
+    }
+    let result = 'heart'
+    if (isLiked) {
+      return result
+    }
+    return result + '-outline'
+}
+
+const HeartIcon = (props) => {
+    const { isLiked, iconStyle } = props
+    return (
+        // <Icon {...props} name={ getHeartIconText(isLiked) } style={iconStyle} fill='#e65050' />
+        <Icon name={ getHeartIconText(isLiked) } style={iconStyle} fill='#e65050' />
+    )
+}
+
 export default class LikeButton extends Component {
 
     constructor(props) {
@@ -11,8 +30,8 @@ export default class LikeButton extends Component {
       this.state = {
         iconStyle: {},
       }
-      this.getHeartIconText = this.getHeartIconText.bind(this)
-      this.heartIcon = this.heartIcon.bind(this)
+    //   this.getHeartIconText = this.getHeartIconText.bind(this)
+    //   this.heartIcon = this.heartIcon.bind(this)
       this.handleLike = this.handleLike.bind(this)
     }
 
@@ -25,46 +44,87 @@ export default class LikeButton extends Component {
                 cursor: 'pointer',
             }
         })
+
+        // const { likes } = GLOBAL.exploreScreen.state
+        // const { pageId } = this.props
+
+        // console.log('isLiked')
+
+        // if (likes && pageId) {
+        //     const isLiked = likes.includes(pageId)
+        //     this.setState({ isLiked: isLiked })
+
+        //     console.log(isLiked)
+        // }
     }
 
-    getHeartIconText(likes) {
-        if (likes == null) {
-            return 'heart-outline'
-        }
-        const { pageId } = this.props
-        const isLiked = likes.includes(pageId)
-        let result = 'heart'
-        if (isLiked) {
-          return result
-        }
-        return result + '-outline'
-    }
+    // getHeartIconText(isLiked) {
+    //     if (isLiked == null) {
+    //         return 'heart-outline'
+    //     }
+    //     let result = 'heart'
+    //     if (isLiked) {
+    //       return result
+    //     }
+    //     return result + '-outline'
+    // }
 
-    heartIcon(props) {
-        const { iconStyle } = this.state
-        const { likes } = GLOBAL.exploreScreen.state
-        return (
-            <Icon {...props} name={ this.getHeartIconText(likes) } style={iconStyle} fill='#e65050' />
-        )
-    }
+    // heartIcon(props) {
+    //     const { iconStyle } = this.state
+    //     // const { likes } = GLOBAL.exploreScreen.state
+    //     const { isLiked } = props
+    //     return (
+    //         <Icon {...props} name={ this.getHeartIconText(isLiked) } style={iconStyle} fill='#e65050' />
+    //     )
+    // }
 
-    handleLike() {
-        const { pageId } = this.props
-        Like.handleLike(pageId)
+    handleLike(pageId, isLiked) {
+        // const { pageId } = this.props
+        Like.handleLike(pageId, isLiked)
         this.forceUpdate()
     }
 
     render() {
-        // const { pageId } = this.props
+        const { info } = this.props
         const { iconStyle } = this.state
+
+        // const { likes } = GLOBAL.exploreScreen.state
+        // const { pageId } = this.props
+        // if (!likes || !pageId) {
+        //     return null
+        // }
+
+        // const isLiked = likes.includes(pageId)
+        // this.setState({ isLiked: isLiked })
+
+        const { likes } = GLOBAL.exploreScreen.state
+        const { pageId } = this.props
+
+        // console.log('isLiked')
+        
+        let isLiked = null
+        if (likes && pageId) {
+            isLiked = likes.includes(pageId)
+        }
+
+        // console.log(isLiked)
+
         return (
             <View style={styles.view}>
-                <Text style={styles.text}>
-                    123
-                </Text>
-                <TouchableWithoutFeedback onPress={ this.handleLike } style={iconStyle}>
+                {
+                    info &&
+                    
+                    <Text style={styles.text}>
+                        {info.likes}
+                    </Text>
+                }
+                <TouchableWithoutFeedback onPress={ () => this.handleLike(pageId, isLiked) } style={iconStyle}>
                     <View style={iconStyle}>
-                        <this.heartIcon />
+                        {/* <this.heartIcon isLiked={isLiked}/> */}
+                        <HeartIcon
+                            isLiked={isLiked}
+                            iconStyle={iconStyle}
+                        />
                     </View>
                 </TouchableWithoutFeedback>
             </View>

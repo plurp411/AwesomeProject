@@ -1,4 +1,18 @@
 import app from 'firebase/app';
+// import * as Analytics from 'expo-firebase-analytics';
+
+// "config": {
+//   "firebase": {
+//     "apiKey": "AIzaSyCccYsv-qFz0HAExhRXPGu2TDStRQhG8_o",
+//     "authDomain": "workouts-1f2c7.firebaseapp.com",
+//     "databaseURL": "https://workouts-1f2c7.firebaseio.com",
+//     "projectId": "workouts-1f2c7",
+//     "storageBucket": "workouts-1f2c7.appspot.com",
+//     "messagingSenderId": "78808038586",
+//     "appId": "1:78808038586:web:f77a49c55e962350e01683",
+//     "measurementId": "G-E4MCYXXCYK"
+//   }
+// }
 
 const config = {
     apiKey: "AIzaSyCccYsv-qFz0HAExhRXPGu2TDStRQhG8_o",
@@ -14,6 +28,13 @@ const config = {
 class Firebase {
   constructor() {
     app.initializeApp(config);
+    
+    // await Analytics.logEvent('ButtonTapped', {
+    //   name: 'settings',
+    //   screen: 'profile',
+    //   purpose: 'Opens the internal settings',
+    // });
+
   }
 }
 

@@ -23,6 +23,7 @@ export default class IconsBar extends Component {
           <LikeButton
             pageId={pageId}
             iconSize={iconSize}
+            info={info}
           />
         </View>
 

@@ -80,8 +80,15 @@ export default class MarkdownTest extends Component {
   }
 
   componentDidMount() {
-    const mdPath = require(`./pages/${this.props.fileName}.md`);
-    // const jsonPath = require(`./pages/${this.props.fileName}.txt`);
+
+
+
+
+
+
+
+
+    // const mdPath = require(`./pages/${this.props.fileName}.md`);
 
 
 
@@ -93,11 +100,10 @@ export default class MarkdownTest extends Component {
     // https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.md
     // https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.txt
 
+    const { url } = this.props
 
-
-
-
-    fetch(mdPath)
+    // fetch(mdPath)
+    fetch(url)
     // fetch('https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.md')
       .then(response => {
         return response.text()

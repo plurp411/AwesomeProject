@@ -48,11 +48,10 @@ export default class ContactView extends Component {
 const styles = StyleSheet.create({
     outerView: {
         backgroundColor: 'rgb(255, 255, 255)',
-        // borderRadius: 10,
         overflow: 'hidden',
-        // margin: 10,
+        margin: 10,
         padding: 10,
-        marginTop: 10,
+        borderRadius: 10,
     },
     titleText: {
         fontWeight: 700,

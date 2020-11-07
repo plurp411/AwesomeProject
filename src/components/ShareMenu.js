@@ -92,7 +92,7 @@ export default class ShareMenu extends Component {
     shareIcon(props) {
         const { iconSize } = this.props
         return (
-            <Icon {...props} name='share-outline' style={{ width: iconSize, height: iconSize }} fill='#ed9842' />
+            <Icon {...props} name='share' style={{ width: iconSize, height: iconSize }} fill='#ed9842' />
         );
     }
 

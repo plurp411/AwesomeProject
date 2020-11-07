@@ -6,6 +6,7 @@ import SearchBar from './SearchBar';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import Bookmark from '../Bookmark';
 import Like from '../Like';
+import Workout_ from '../Workout';
 import GLOBAL from '../global'
 
 export default class SearchScreen extends Component {
@@ -13,10 +14,10 @@ export default class SearchScreen extends Component {
     constructor(props) {
       super(props)
       this.state = {
-        info: null,
+        // info: null,
         foundInfo: null,
-        bookmarks: null,
-        likes: null,
+        // bookmarks: null,
+        // likes: null,
       }
       // GLOBAL.exploreScreen = this
       // Bookmark.getBookmarksData()
@@ -27,18 +28,18 @@ export default class SearchScreen extends Component {
 
       this.props.navigation.addListener('focus', this.onScreenFocus)
 
-      const jsonPath = require(`./pages/all.txt`);
+      // const jsonPath = require(`./pages/all.txt`);
     
-      fetch(jsonPath)
-      // fetch('https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.txt')
-        .then(response => {
-          return response.json()
-        })
-        .then(json => {
-          this.setState({
-            info: json
-          })
-        })
+      // fetch(jsonPath)
+      // // fetch('https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.txt')
+      //   .then(response => {
+      //     return response.json()
+      //   })
+      //   .then(json => {
+      //     this.setState({
+      //       info: json
+      //     })
+      //   })
 
       // GLOBAL.exploreScreen = this
       // Bookmark.getBookmarksData()
@@ -46,17 +47,17 @@ export default class SearchScreen extends Component {
 
     onScreenFocus = () => {
       GLOBAL.exploreScreen = this
-      Bookmark.getBookmarksData()
+      Workout_.refreshState()
+      Bookmark.refreshState()
       Like.refreshState()
       console.log('SEARCH focus')
     }
 
     handleSearch(searchInput) {
-      
-      const { info } = this.state;
-        
-      if (!info) {
-        return
+
+      let info = null
+      if (GLOBAL.exploreScreen) {
+        info = GLOBAL.exploreScreen.state.workouts
       }
 
       const cleanSearchInput = searchInput.trim().toLowerCase()

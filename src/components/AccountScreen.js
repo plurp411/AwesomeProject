@@ -34,9 +34,12 @@ export default class AccountScreen extends Component {
 
           <Navbar
             title='Account'
+            // title='Settings'
           />
 
           <ScrollView>
+
+            <ContactView />
 
             {
               user &&
@@ -64,12 +67,12 @@ export default class AccountScreen extends Component {
               status='warning'
             />
 
-            {/* <Divider /> */}
+              {/* <Divider /> */}
 
-            {/* <View style={{ flex: 1 }}>
-            </View> */}
+              {/* <View style={{ flex: 1 }}>
+              </View> */}
 
-            <ContactView />
+              {/* <ContactView /> */}
             
           </ScrollView>
 
@@ -88,6 +91,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     margin: 10,
+    marginTop: 0,
     padding: 10,
   },
   logoutButton: {
@@ -95,6 +99,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     height: 40,
     marginHorizontal: 10,
+    marginBottom: 10,
   },
   logoutButtonText: {
     color: 'rgb(0, 0, 0)',

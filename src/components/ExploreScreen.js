@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-// import { Layout } from '@ui-kitten/components';
+// import { Spinner } from '@ui-kitten/components';
 // import { Button } from 'react-native';
 import Workout from './Workout';
 import Navbar from './Navbar';
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import MainSpinner from './MainSpinner';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
-import Bookmark from '../Bookmark';
-import GLOBAL from '../global'
+import GLOBAL from '../global';
+import Workout_ from '../Workout';
 import Like from '../Like';
+import Bookmark from '../Bookmark';
 
 export default class ExploreScreen extends Component {
 
@@ -15,9 +17,10 @@ export default class ExploreScreen extends Component {
       super(props)
       this.state = {
         // workoutIds: ['1', '2', '3']
-        info: null,
-        bookmarks: null,
-        likes: null,
+        // info: null,
+        // bookmarks: null,
+        // likes: null,
+        // workouts: null,
       }
       // this.handleBookmark = this.handleBookmark.bind(this)
       // this.getBookmarksData = this.getBookmarksData.bind(this)
@@ -32,18 +35,18 @@ export default class ExploreScreen extends Component {
 
       // console.log('flkjhg')
 
-      const jsonPath = require(`./pages/all.txt`);
+      // const jsonPath = require(`./pages/all.txt`);
     
-      fetch(jsonPath)
-      // fetch('https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.txt')
-        .then(response => {
-          return response.json()
-        })
-        .then(json => {
-          this.setState({
-            info: json
-          })
-        })
+      // fetch(jsonPath)
+      // // fetch('https://raw.githubusercontent.com/plurp411/AwesomeProject/master/src/components/pages/1.txt')
+      //   .then(response => {
+      //     return response.json()
+      //   })
+      //   .then(json => {
+      //     this.setState({
+      //       info: json
+      //     })
+      //   })
     
       // this.storeBookmarksData()
       // this.storeBookmarksData({
@@ -56,9 +59,20 @@ export default class ExploreScreen extends Component {
   
     onScreenFocus = () => {
       GLOBAL.exploreScreen = this
-      Bookmark.getBookmarksData()
-      Like.getLikesData()
+      Workout_.refreshState()
+      Bookmark.refreshState()
+      Like.refreshState()
+
       console.log('EXPLORE focus')
+      // console.log(GLOBAL.exploreScreen.state.workouts)
+
+      // var intervalID = window.setInterval( () => console.log(GLOBAL.exploreScreen.state), 500);
+      
+      // if (GLOBAL.exploreScreen.state.workouts) {
+      //   this.setState({
+      //     info: GLOBAL.exploreScreen.state.workouts
+      //   })
+      // }
     }
 
     // handleBookmark(pageId) {
@@ -117,7 +131,15 @@ export default class ExploreScreen extends Component {
     // }
   
     render() {
-      const { info } = this.state
+      // const { info } = this.state
+
+      let info = null
+      if (GLOBAL.exploreScreen) {
+        info = GLOBAL.exploreScreen.state.workouts
+      }
+
+      // const info = GLOBAL.exploreScreen.state.workouts
+
       const { navigation } = this.props
       return (
         <SafeAreaView style={styles.safeView}>
@@ -126,32 +148,42 @@ export default class ExploreScreen extends Component {
             title='Explore'
           />
 
-          <ScrollView style={styles.workouts}>
+          {
+            info &&
+            
+            <ScrollView style={styles.workouts}>
 
-            {/* {info && info.map((workoutId, index) =>
-              <Workout
-                key={workoutId}
-                isFirst={index == 0}
-                pageId={workoutId}
-                navigation={this.props.navigation}
-              />
-            )} */}
-
-            {
-              info && Object.keys(info).map((key, index) => ( 
+              {/* {info && info.map((workoutId, index) =>
                 <Workout
-                  key={key}
-                  info={info[key]}
-                  pageId={key}
+                  key={workoutId}
                   isFirst={index == 0}
-                  navigation={navigation}
-                  // handleBookmark={this.handleBookmark}
-                  // isBookmarked={bookmarks.includes(key)}
+                  pageId={workoutId}
+                  navigation={this.props.navigation}
                 />
-              ))
-            }
+              )} */}
 
-          </ScrollView>
+              {
+                Object.keys(info).map((key, index) => ( 
+                  <Workout
+                    key={key}
+                    info={info[key]}
+                    pageId={key}
+                    isFirst={index == 0}
+                    navigation={navigation}
+                    // handleBookmark={this.handleBookmark}
+                    // isBookmarked={bookmarks.includes(key)}
+                  />
+                ))
+              }
+
+            </ScrollView>
+          }
+
+          {
+            !info &&
+            
+            <MainSpinner />
+          }
 
           {/* <Button
             title="Go to Page"
@@ -177,6 +209,6 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: 'rgb(225, 225, 225)',
     backgroundColor: 'rgb(245, 245, 245)',
-  }
+  },
 });
 

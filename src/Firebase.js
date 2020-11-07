@@ -58,6 +58,14 @@ export default class Firebase {
         return Firebase.database.ref('users/' + Firebase.user.uid)
     }
 
+    static getWorkoutsRef() {
+        return Firebase.database.ref('workouts')
+    }
+
+    static getCategoriesRef() {
+        return Firebase.database.ref('categories')
+    }
+
     static handleLogoutUser() {
         Firebase.auth.signOut()
     }

@@ -6,6 +6,7 @@ import PageTitling from './PageTitling';
 import IconsBar from './IconsBar';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Helpers from '../Helpers'
 
 // const navigateBack = () => {
 //   navigation.goBack();
@@ -27,7 +28,7 @@ class PageScreen extends Component {
 
     componentDidMount() {
       const { info } = this.props.route.params
-      this.props.navigation.setOptions({ title: info.title })
+      this.props.navigation.setOptions({ title: Helpers.titleCase(info.title) })
       this.props.navigation.addListener('focus', this.onScreenFocus)
     }
 
@@ -89,7 +90,10 @@ class PageScreen extends Component {
             
                     {/* <Divider /> */}
             
-                    <MarkdownFile fileName={pageId} />
+                    <MarkdownFile
+                      // fileName={pageId}
+                      url={info.url}
+                    />
                     
                 </ScrollView>
                 {/* </View> */}

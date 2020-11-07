@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { Text, Button } from '@ui-kitten/components';
 import Workout from './Workout';
 import Navbar from './Navbar';
+import MainSpinner from './MainSpinner';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import Bookmark from '../Bookmark';
 import Like from '../Like';
+import Workout_ from '../Workout';
 import GLOBAL from '../global'
 
 export default class BookmarksScreen extends Component {
@@ -12,9 +14,9 @@ export default class BookmarksScreen extends Component {
     constructor(props) {
       super(props)
       this.state = {
-        info: null,
-        bookmarks: null,
-        likes: null,
+        // info: null,
+        // bookmarks: null,
+        // likes: null,
       }
     }
   
@@ -22,50 +24,60 @@ export default class BookmarksScreen extends Component {
       
       this.props.navigation.addListener('focus', this.onScreenFocus)
 
-      const jsonPath = require(`./pages/all.txt`);
+      // const jsonPath = require(`./pages/all.txt`);
     
-      fetch(jsonPath)
-        .then(response => {
-          return response.json()
-        })
-        .then(json => {
-          this.setState({
-            info: json
-          })
-        })
+      // fetch(jsonPath)
+      //   .then(response => {
+      //     return response.json()
+      //   })
+      //   .then(json => {
+      //     this.setState({
+      //       info: json
+      //     })
+      //   })
     }
   
     onScreenFocus = () => {
       GLOBAL.exploreScreen = this
-      Bookmark.getBookmarksData()
+      Workout_.refreshState()
+      Bookmark.refreshState()
       Like.refreshState()
       console.log('BOOKMARKS focus')
     }
 
     render() {
-      const { info } = this.state
-      const { navigation } = this.props
-      if (!GLOBAL.exploreScreen) {
-        // console.log('aslkdjfhgaslkdjfhas')
-        return null
+      // const { info } = this.state
+
+      let info = null
+      let bookmarks = null
+      if (GLOBAL.exploreScreen) {
+        info = GLOBAL.exploreScreen.state.workouts
+        bookmarks = GLOBAL.exploreScreen.state.bookmarks
       }
+
+      const { navigation } = this.props
+      // if (!GLOBAL.exploreScreen) {
+      //   // console.log('aslkdjfhgaslkdjfhas')
+      //   return null
+      // }
       
       // console.log('GLOBAL.exploreScreen.state')
       // console.log(GLOBAL.exploreScreen.state)
 
-      const { bookmarks } = GLOBAL.exploreScreen.state
+      // const { bookmarks } = GLOBAL.exploreScreen.state
       let isFirst = true
       return (
         <SafeAreaView style={styles.safeView}>
 
           <Navbar
-            title='Bookmarks'
+            // title='Bookmarks'
+            title='Saved'
           />
 
           {/* <SearchBar /> */}
           
           {
-            info && bookmarks.length > 0 &&
+            info && bookmarks && bookmarks.length > 0 &&
           
             <ScrollView style={styles.workouts}>
 
@@ -95,7 +107,7 @@ export default class BookmarksScreen extends Component {
 
           {
             // (!info || bookmarks.length <= 0) &&
-            bookmarks.length <= 0 &&
+            ((bookmarks && bookmarks.length <= 0) || isFirst) &&
 
             <View style={styles.emptyView}>
               <Text style={styles.emptyText}>
@@ -116,7 +128,12 @@ export default class BookmarksScreen extends Component {
                 }
               />
             </View>
+          }
 
+          {
+            (!info || !bookmarks) &&
+
+            <MainSpinner />
           }
 
 
@@ -147,6 +164,8 @@ const styles = StyleSheet.create({
   },
   emptyView: {
     margin: 'auto',
+    justifyContent: 'center',
+    height: '100%',
   },
   emptyText: {
     color: 'rgb(150, 150, 150)',

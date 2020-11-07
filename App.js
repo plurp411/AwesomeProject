@@ -19,9 +19,15 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation, BottomNavigationTab, Icon, Divider } from '@ui-kitten/components';
 import LoginScreen from './src/components/LoginScreen';
 import Firebase from './src/Firebase';
+import Workout from './src/Workout';
 import Like from './src/Like';
+import Bookmark from './src/Bookmark';
 
 let firebase = Firebase.start()
+
+// Workout.getWorkoutData()
+// Bookmark.getBookmarkData()
+// Like.getLikeData()
 
 // import * as firebase from 'firebase';
 
@@ -97,18 +103,22 @@ const BottomTabBar = ({ navigation, state }) => (
       style={styles.tabBar}
     >
 
-      {/* <BottomNavigationTab title='Explore' icon={ExploreIcon}/>
-      <BottomNavigationTab title='Search' icon={SearchIcon}/>
-      <BottomNavigationTab title='Create' icon={CreateIcon}/>
-      <BottomNavigationTab title='Bookmarks' icon={BookmarksIcon}/>
-      <BottomNavigationTab title='Account' icon={AccountIcon}/> */}
 
-      <BottomNavigationTab icon={ExploreIcon}/>
-      <BottomNavigationTab icon={SearchIcon}/>
+      {/* <BottomNavigationTab title='Create' icon={CreateIcon}/> */}
+
+      <BottomNavigationTab title='Explore' icon={ExploreIcon}/>
+      <BottomNavigationTab title='Search' icon={SearchIcon}/>
+      <BottomNavigationTab title='Sorted' icon={CategoriesIcon}/>
+      <BottomNavigationTab title='Saved' icon={BookmarksIcon}/>
+      <BottomNavigationTab title='Account' icon={AccountIcon}/>
+
       {/* <BottomNavigationTab icon={CreateIcon}/> */}
+
+      {/* <BottomNavigationTab icon={ExploreIcon}/>
+      <BottomNavigationTab icon={SearchIcon}/>
       <BottomNavigationTab icon={CategoriesIcon}/>
       <BottomNavigationTab icon={BookmarksIcon}/>
-      <BottomNavigationTab icon={AccountIcon}/>
+      <BottomNavigationTab icon={AccountIcon}/> */}
 
     </BottomNavigation>
   </>
@@ -181,7 +191,7 @@ function CategoriesStackNavigator() {
       <Stack.Screen
         name="Categories"
         component={CategoriesScreen}
-        options={{ title: 'Categories' }}
+        options={{ title: 'Sorted' }}
       />
 
       <Stack.Screen
@@ -207,7 +217,7 @@ function BookmarksStackNavigator() {
       <Stack.Screen
         name="Bookmarks"
         component={BookmarksScreen}
-        options={{ title: 'Bookmarks' }}
+        options={{ title: 'Saved' }}
       />
 
       <Stack.Screen
@@ -227,6 +237,7 @@ function AccountStackNavigator() {
       <Stack.Screen
         name="Account"
         component={AccountScreen}
+        // options={{ title: 'Settings' }}
         options={{ title: 'Account' }}
       />
 
@@ -358,7 +369,12 @@ export default class extends Component {
         _this.setState({
           isSignedIn: true
         })
-        
+
+        Workout.getWorkoutData()
+        Bookmark.getBookmarkData()
+        Like.getLikeData()
+        // Category.getCategoryData()
+    
         // ...
 
       } else {

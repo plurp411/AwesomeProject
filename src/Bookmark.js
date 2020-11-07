@@ -24,33 +24,56 @@ export default class Bookmark {
     Bookmark.storeBookmarksData(newBookmarks)
   }
 
-  static async getBookmarksData() {
+  static async getBookmarkData() {
 
-    GLOBAL.exploreScreen.setState({
-      bookmarks: []
-    })
+    // GLOBAL.exploreScreen.setState({
+    //   bookmarks: []
+    // })
 
     Firebase.getUserRef().on('value', function(snapshot) {
 
       const snapVal = snapshot.val()
       
+
+
+
+
+      
+      // if (!snapVal) {
+      //   return
+      // }
+
+
+
+
+
+
+
       if (!snapVal || !snapVal.bookmarks) {
-        return
+        Bookmark.bookmarks = []
+      } else {
+        Bookmark.bookmarks = snapVal.bookmarks
       }
 
-      console.log('snapVal snapVal snapVal snapValsnapValsnapVal')
-      console.log(snapVal)
+      // console.log('snapVal snapVal snapVal snapValsnapValsnapVal')
+      // console.log(snapVal)
 
-      Bookmark.bookmarks = snapVal.bookmarks
+      // Bookmark.bookmarks = snapVal.bookmarks
 
+      if (!GLOBAL.exploreScreen) {
+        return
+      }
       GLOBAL.exploreScreen.setState({
-        bookmarks: snapVal.bookmarks
+        bookmarks: Bookmark.bookmarks
       })
     });
 
   }
 
   static refreshState() {
+    if (!Bookmark.bookmarks) {
+      return
+    }
     GLOBAL.exploreScreen.setState({
       bookmarks: Bookmark.bookmarks
     })

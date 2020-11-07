@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Icon, TopNavigation, TopNavigationAction, Divider } from '@ui-kitten/components';
+import { Icon, TopNavigation, TopNavigationAction, Divider, Text } from '@ui-kitten/components';
 // import { styles } from 'react-native-markdown-renderer';
 import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -129,7 +129,11 @@ export default class BackNavbar extends Component {
                             // accessoryRight={ShareAction}
                             // accessoryRight={this.rightArea}
                             // title={info.title}
-                            title={title}
+                            title={
+                                <Text style={styles.title}>
+                                    {title}
+                                </Text>
+                            }
                             style={styles.navbar}
                         />
                         <Divider />
@@ -143,6 +147,10 @@ export default class BackNavbar extends Component {
 const styles = StyleSheet.create({
 	navbar: {
 		// backgroundColor: 'rgb(245, 245, 245)',
+    },
+    title: {
+        fontWeight: 600,
+        textTransform: 'capitalize',
     },
 });
 
