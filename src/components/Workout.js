@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Text, Divider } from '@ui-kitten/components';
-import { StyleSheet, Image, View, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Image, View, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
 // import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ShareMenu from './ShareMenu';
 // import Bookmark from '../Bookmark';
 import BookmarkButton from './BookmarkButton';
 import IconsBar from './IconsBar';
+import Hoverable from '../Hoverable.ts';
 
 // const getBookmarksData = async () => {
 //   try {
@@ -98,7 +99,7 @@ export default class Workout extends Component {
 
   getFirstStyle() {
     if (this.props.isFirst) {
-      return {marginTop: 10}
+      return { marginTop: 10 }
     }
     return {}
   }
@@ -134,44 +135,49 @@ export default class Workout extends Component {
     return (
       <>
         {info &&
-          <TouchableWithoutFeedback
-            onPress={() =>
-              this.props.navigation.navigate('Page', {
-                pageId: pageId,
-                info: info,
-              })
-            }
-          >
-            <View style={[styles.view, this.getFirstStyle()]}>
+          <Hoverable>
+            {isHovered => (
+              <TouchableHighlight
+                style={[styles.touchableView, this.getFirstStyle()]}
+                underlayColor='rgb(235, 235, 235)'
+                activeOpacity={0.85}
+                onPress={() =>
+                  this.props.navigation.navigate('Page', {
+                    pageId: pageId,
+                    info: info,
+                  })
+                }
+              >
+                <View style={[styles.view, isHovered && styles.viewHover]}>
 
-              <Image
-                style={styles.image}
-                source={{uri: info.image}}
-              />
+                  <Image
+                    style={styles.image}
+                    source={{uri: info.image}}
+                  />
 
-              <Text style={styles.title}>
-                {info.title}
-              </Text>
+                  <Text style={styles.title}>
+                    {info.title}
+                  </Text>
 
-              <Text style={styles.subtitle}>
-                {info.subtitle}
-              </Text>
+                  <Text style={styles.subtitle}>
+                    {info.subtitle}
+                  </Text>
 
-              <Divider style={styles.divider} />
+                  <Divider style={styles.divider} />
 
-              {/* <this.iconView /> */}
+                  {/* <this.iconView /> */}
 
-              <View style={styles.iconsBarView}>
-                <IconsBar
-                  info={info}
-                  pageId={pageId}
-                />
-              </View>
+                  <View style={styles.iconsBarView}>
+                    <IconsBar
+                      info={info}
+                      pageId={pageId}
+                    />
+                  </View>
 
-
-            </View>
-
-          </TouchableWithoutFeedback>
+                </View>
+              </TouchableHighlight>
+            )}
+          </Hoverable>
         }
       </>
     );
@@ -179,16 +185,26 @@ export default class Workout extends Component {
 }
 
 const styles = StyleSheet.create({
-	view: {
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
+  touchableView: {
     borderRadius: 10,
+    overflow: 'hidden',
+    marginHorizontal: 10,
+    marginBottom: 10,
+    maxWidth: 400,
+  },
+	view: {
     overflow: 'hidden',
     backgroundColor: 'rgb(255, 255, 255)',
     padding: 10,
+    borderRadius: 10,
     cursor: 'pointer',
-    maxWidth: 400,
+  },
+  viewHover: {
+    // backgroundColor: 'rgb(245, 245, 245)',
+    // padding: 8,
+    // borderWidth: 2,
+    // borderColor: 'rgb(225, 225, 225)'
+    opacity: 0.85,
   },
   image: {
     resizeMode: 'cover',
@@ -237,7 +253,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   iconsBarView: {
-    marginTop: 5,
+    margin: -5,
+    marginTop: 0,
+    // backgroundColor: '#ffffff'
   },
 });
 

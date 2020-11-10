@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Divider, Input, Icon, Button } from '@ui-kitten/components';
-import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
+import { Divider, Input, Icon } from '@ui-kitten/components';
+import { StyleSheet, View } from 'react-native';
 
 class SearchInput extends Component {
 

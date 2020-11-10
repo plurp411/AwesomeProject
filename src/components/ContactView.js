@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar';
-import { StyleSheet, View } from 'react-native';
-import { Text, Button, Divider } from '@ui-kitten/components';
+import { StyleSheet, View, TouchableHighlight } from 'react-native';
+import { Text, Divider } from '@ui-kitten/components';
+import Communications from 'react-native-communications';
+
 
 export default class ContactView extends Component {
 
@@ -37,8 +38,18 @@ export default class ContactView extends Component {
                     <br></br>
                     Feel free to contact me at:
                     <br></br>
-                    <b>collin.riley.howard@gmail.com</b>
                 </Text>
+
+                <TouchableHighlight
+                    style={styles.touchableView}
+                    underlayColor='rgb(235, 235, 235)'
+                    activeOpacity={0.85}
+                    onPress={ () => Communications.email('collin.riley.howard@gmail.com', null, null, null, null) }
+                >
+                    <Text  style={styles.emailText}>
+                        collin.riley.howard@gmail.com
+                    </Text>
+                </TouchableHighlight>
 
             </View>
         );
@@ -64,6 +75,18 @@ const styles = StyleSheet.create({
     },
     descriptionText: {
         fontWeight: 400,
+    },
+    emailText: {
+        fontWeight: 700,
+        cursor: 'pointer',
+    },
+    touchableView: {
+        borderRadius: 10,
+        overflow: 'hidden',
+        marginHorizontal: 'auto',
+        marginTop: 5,
+        paddingVertical: 5,
+        paddingHorizontal: 10,
     },
 });
 

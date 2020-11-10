@@ -7,7 +7,7 @@ export default class Category {
 
   static async getCategoryData() {
 
-    Firebase.getCategoriesRef().on('value', function(snapshot) {
+    Firebase.getCategoriesRef().once('value', function(snapshot) {
 
       const snapVal = snapshot.val()
       

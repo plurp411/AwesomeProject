@@ -115,6 +115,7 @@ export default class CategoriesScreen extends Component {
       }
 
       const { navigation } = this.props
+      let isFirst = true
       return (
         <SafeAreaView style={styles.safeView}>
 
@@ -126,18 +127,22 @@ export default class CategoriesScreen extends Component {
           <ScrollView style={styles.workouts}>
 
             {
-              console.log('infoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfoinfo' + info)
-            }
-
-            {
               info && Object.keys(info).map((key, index) => (
-                <Category
-                  key={key}
-                  // categoryId={key}
-                  info={info[key]}
-                  isFirst={index == 0}
-                  navigation={navigation}
-                />
+                <React.Fragment key={key}>
+                  {
+                    info[key].pageIds &&
+                    <Category
+                      key={key}
+                      // categoryId={key}
+                      info={info[key]}
+                      isFirst={isFirst}
+                      navigation={navigation}
+                    />
+                  }
+                  {
+                    isFirst && info[key].pageIds ? isFirst = false : null
+                  }
+                </React.Fragment>
               ))
             }
 

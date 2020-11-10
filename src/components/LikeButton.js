@@ -3,6 +3,7 @@ import { Text, Icon } from '@ui-kitten/components';
 import { StyleSheet, View, TouchableWithoutFeedback } from 'react-native';
 import Like from '../Like';
 import GLOBAL from '../global.js'
+import Hoverable from '../Hoverable.ts'
 
 function getHeartIconText(isLiked) {
     if (isLiked == null) {
@@ -78,10 +79,10 @@ export default class LikeButton extends Component {
     //     )
     // }
 
-    handleLike(pageId, isLiked) {
+    handleLike(pageId, isLiked, likesCount) {
         // const { pageId } = this.props
-        Like.handleLike(pageId, isLiked)
-        this.forceUpdate()
+        Like.handleLike(pageId, isLiked, likesCount)
+        // this.forceUpdate()
     }
 
     render() {
@@ -118,14 +119,18 @@ export default class LikeButton extends Component {
                         {info.likes}
                     </Text>
                 }
-                <TouchableWithoutFeedback onPress={ () => this.handleLike(pageId, isLiked) } style={iconStyle}>
-                    <View style={iconStyle}>
-                        {/* <this.heartIcon isLiked={isLiked}/> */}
-                        <HeartIcon
-                            isLiked={isLiked}
-                            iconStyle={iconStyle}
-                        />
-                    </View>
+                <TouchableWithoutFeedback onPress={ () => this.handleLike(pageId, isLiked, info.likes) } style={iconStyle}>
+                    <Hoverable>
+                        {isHovered => (
+                            <View style={[styles.iconView, isHovered && styles.iconViewHover]}>
+                                {/* <this.heartIcon isLiked={isLiked}/> */}
+                                <HeartIcon
+                                    isLiked={isLiked}
+                                    iconStyle={iconStyle}
+                                />
+                            </View>
+                        )}
+                    </Hoverable>
                 </TouchableWithoutFeedback>
             </View>
         )
@@ -137,10 +142,19 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row-reverse',
     },
+    iconView: {
+        borderRadius: 9999,
+        overflow: 'hidden',
+        padding: 5,
+    },
+    iconViewHover: {
+        backgroundColor: 'rgb(235, 235, 235)',
+    },
     text: {
         marginHorizontal: 5,
         fontWeight: 600,
         fontSize: 16,
+        marginVertical: 'auto',
     },
 });
 

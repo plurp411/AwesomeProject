@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './Navbar';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import Firebase from '../Firebase';
-import { Text, Button, Icon } from '@ui-kitten/components';
+import { Text, Button } from '@ui-kitten/components';
 import ContactView from './ContactView';
 
 // const LogoutIcon = (props) => (

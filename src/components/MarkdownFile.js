@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import Markdown, {getUniqueID} from 'react-native-markdown-renderer';
 import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native';
+import MainSpinner from './MainSpinner';
 // import { Divider } from '@ui-kitten/components';
 // import PageTitling from './PageTitling';
 // import BottomNavButtons from './BottomNavButtons';
@@ -19,55 +20,6 @@ import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native';
 //       </Text>
 //     </>,
 // };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 18,
-  },
-  heading: {
-    fontWeight: 500,
-    textTransform: 'capitalize',
-  },
-  heading1: {
-    fontSize: 32,
-  },
-  heading2: {
-    fontSize: 24,
-  },
-  heading3: {
-    fontSize: 18,
-  },
-  heading4: {
-    fontSize: 16,
-  },
-  heading5: {
-    fontSize: 13,
-  },
-  heading6: {
-    fontSize: 11,
-  },
-  image: {
-    // backgroundColor: 'rgb(245, 245, 245)',
-    maxWidth: 500,
-    marginTop: 10,
-    marginHorizontal: 'auto',
-    resizeMode: 'contain',
-    borderRadius: 5,
-    overflow: 'hidden',
-    // borderColor: 'rgb(225, 225, 225)',
-    // borderWidth: 1
-  }
-});
-
-const viewStyles = StyleSheet.create({
-  view: {
-    backgroundColor: 'rgb(255, 255, 255)',
-    paddingTop: 20,
-    paddingBottom: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
-  }
-});
 
 export default class MarkdownTest extends Component {
 
@@ -146,12 +98,17 @@ export default class MarkdownTest extends Component {
               <Divider />
             </>
           } */}
-
-          <View style={viewStyles.view}>
-            {markdown &&
-              <Markdown style={styles}>{markdown}</Markdown>
-            }
-          </View>
+          
+          {/* {
+            !markdown &&
+            <MainSpinner />
+          } */}
+          {
+            markdown &&
+            <View style={styles.view}>
+              <Markdown style={markdownStyles}>{markdown}</Markdown>
+            </View>
+          }
 
           {/* <Divider /> */}
 
@@ -163,4 +120,54 @@ export default class MarkdownTest extends Component {
     );
   }
 }
+
+const markdownStyles = StyleSheet.create({
+  text: {
+    fontSize: 18,
+  },
+  heading: {
+    fontWeight: 500,
+    textTransform: 'capitalize',
+  },
+  heading1: {
+    fontSize: 32,
+  },
+  heading2: {
+    fontSize: 24,
+  },
+  heading3: {
+    fontSize: 18,
+  },
+  heading4: {
+    fontSize: 16,
+  },
+  heading5: {
+    fontSize: 13,
+  },
+  heading6: {
+    fontSize: 11,
+  },
+  image: {
+    // backgroundColor: 'rgb(245, 245, 245)',
+    maxWidth: 500,
+    marginTop: 10,
+    marginHorizontal: 'auto',
+    resizeMode: 'contain',
+    borderRadius: 5,
+    overflow: 'hidden',
+    // borderColor: 'rgb(225, 225, 225)',
+    // borderWidth: 1
+  },
+});
+
+const styles = StyleSheet.create({
+  view: {
+    backgroundColor: 'rgb(255, 255, 255)',
+    paddingTop: 20,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    // zIndex: 2,
+  },
+});
 

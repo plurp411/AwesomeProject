@@ -96,7 +96,7 @@ export default class BookmarksScreen extends Component {
                       />
                     }
                     {
-                      bookmarks.includes(key) && isFirst ? isFirst = false : null
+                      isFirst && bookmarks.includes(key) ? isFirst = false : null
                     }
                   </React.Fragment>
                 ))

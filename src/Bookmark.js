@@ -5,23 +5,23 @@ export default class Bookmark {
 
   static bookmarks = null
 
-  static handleBookmark(pageId) {
+  static handleBookmark(pageId, isBookmarked) {
 
-    if (GLOBAL.exploreScreen.state.bookmarks == null) {
+    if (GLOBAL.exploreScreen.state.bookmarks == null || isBookmarked == null) {
       return
     }
 
     let newBookmarks = GLOBAL.exploreScreen.state.bookmarks
 
-    const index = newBookmarks.indexOf(pageId)
-    
-    if (index > -1) {
+    if (isBookmarked) {
+      const index = newBookmarks.indexOf(pageId)
       newBookmarks.splice(index, 1)
     } else {
       newBookmarks.push(pageId)
     }
-
+    
     Bookmark.storeBookmarksData(newBookmarks)
+    Bookmark.updateBookmarkStates(newBookmarks)
   }
 
   static async getBookmarkData() {
@@ -79,12 +79,20 @@ export default class Bookmark {
     })
   }
 
-  static async storeBookmarksData(value) {
+  static async storeBookmarksData(bookmarks) {
 
     Firebase.getUserRef().update({
-      bookmarks: value
+      bookmarks: bookmarks
     });
     
+  }
+
+  static updateBookmarkStates(bookmarks) {
+
+    Bookmark.bookmarks = bookmarks
+    GLOBAL.exploreScreen.setState({
+      bookmarks: bookmarks
+    })
   }
 
 }

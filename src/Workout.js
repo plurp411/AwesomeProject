@@ -11,7 +11,7 @@ export default class Workout {
     //   workouts: {}
     // })
 
-    Firebase.getWorkoutsRef().on('value', function(snapshot) {
+    Firebase.getWorkoutsRef().once('value', function(snapshot) {
 
       const snapVal = snapshot.val()
       

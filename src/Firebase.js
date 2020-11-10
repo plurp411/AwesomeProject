@@ -58,6 +58,10 @@ export default class Firebase {
         return Firebase.database.ref('users/' + Firebase.user.uid)
     }
 
+    static getWorkoutRef(pageId) {
+        return Firebase.database.ref('workouts/' + pageId)
+    }
+
     static getWorkoutsRef() {
         return Firebase.database.ref('workouts')
     }

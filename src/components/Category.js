@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, Divider, Icon } from '@ui-kitten/components';
-import { StyleSheet, Image, View, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Image, View, TouchableHighlight } from 'react-native';
+import Hoverable from '../Hoverable.ts';
 
 const RightIcon = (props) => (
   <Icon {...props} name='chevron-right-outline' style={styles.icon} fill='' />
@@ -30,40 +31,51 @@ export default class Category extends Component {
     return (
       <>
         {info && info.pageIds &&
-          <TouchableWithoutFeedback
-            onPress={() =>
-              this.props.navigation.navigate('CategoriesFinal', {
-                pageIds: info.pageIds,
-                title: info.title
-              })
-            }
-          >
-            <View style={[styles.view, this.getFirstStyle()]}>
+          <Hoverable>
+            {(isHovered) => (
+              <TouchableHighlight
+                style={[styles.touchableView, this.getFirstStyle()]}
+                underlayColor='rgb(235, 235, 235)'
+                activeOpacity={0.85}
+                onPress={() =>
+                  this.props.navigation.navigate('CategoriesFinal', {
+                    pageIds: info.pageIds,
+                    title: info.title
+                  })
+                }
+              >
+                <View style={[styles.view, isHovered && styles.viewHover]}>
 
-              <Image
-                style={styles.image}
-                source={{uri: info.image}}
-              />
+                  <Image
+                    style={styles.image}
+                    source={{uri: info.image}}
+                  />
 
-              {/* <Divider style={styles.divider}/> */}
+                  {/* <Divider style={styles.divider}/> */}
 
-              <View style={styles.textView}>
-                <Text style={styles.title}>
-                  {info.title}
-                </Text>
+                  <View style={styles.textView}>
+                    <Text style={styles.title}>
+                      {info.title}
+                    </Text>
 
-                <Text style={styles.subtitle}>
-                  {info.pageIds.length} Items
-                </Text>
-              </View>
+                    <Text style={styles.subtitle}>
+                      {info.pageIds.length} Item
+                      {
+                        info.pageIds.length > 1 &&
+                        <>s</>
+                      }
+                    </Text>
+                  </View>
 
-              {/* <View> */}
-              <RightIcon />
-              {/* </View> */}
+                  {/* <View> */}
+                  <RightIcon />
+                  {/* </View> */}
 
-            </View>
+                </View>
 
-          </TouchableWithoutFeedback>
+              </TouchableHighlight>
+            )}
+          </Hoverable>
         }
       </>
     );
@@ -71,18 +83,23 @@ export default class Category extends Component {
 }
 
 const styles = StyleSheet.create({
-	view: {
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
+  touchableView: {
     borderRadius: 10,
+    overflow: 'hidden',
+    marginHorizontal: 10,
+    marginBottom: 10,
+    maxWidth: 400,
+  },
+	view: {
     overflow: 'hidden',
     backgroundColor: 'rgb(255, 255, 255)',
     padding: 10,
     cursor: 'pointer',
-    maxWidth: 400,
     flex: 1,
     flexDirection: 'row',
+  },
+  viewHover: {
+    opacity: 0.85,
   },
   image: {
     resizeMode: 'cover',

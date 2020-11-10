@@ -28,7 +28,7 @@ export default class MainSpinner extends Component {
 const styles = StyleSheet.create({
     spinnerView: {
         margin: 'auto',
+        // zIndex: 1,
     },
 });
-  
-  
+

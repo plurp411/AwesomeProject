@@ -7,6 +7,10 @@ import IconsBar from './IconsBar';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Helpers from '../Helpers'
+import GLOBAL from '../global';
+import Workout from '../Workout';
+import Like from '../Like';
+import Bookmark from '../Bookmark';
 
 // const navigateBack = () => {
 //   navigation.goBack();
@@ -18,7 +22,9 @@ class PageScreen extends Component {
       super(props)
       this.state = {
         // info: null,
-        triggerReload: false,
+
+        // triggerReload: false,
+      
       }
     }
 
@@ -35,10 +41,17 @@ class PageScreen extends Component {
     onScreenFocus = () => {
       // Bookmark.getBookmarksData()
       // console.log('PAGE focus')
-      const { triggerReload } = this.state
-      this.setState({
-        triggerReload: !triggerReload
-      })
+
+      // const { triggerReload } = this.state
+      // this.setState({
+      //   triggerReload: !triggerReload
+      // })
+
+      GLOBAL.exploreScreen = this
+      Workout.refreshState()
+      Bookmark.refreshState()
+      Like.refreshState()
+
     }
   
     render() {
