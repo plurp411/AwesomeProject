@@ -21,7 +21,7 @@ import MainSpinner from './MainSpinner';
 //     </>,
 // };
 
-export default class MarkdownTest extends Component {
+export default class MarkdownFile extends Component {
 
   constructor(props) {
     super(props)

@@ -86,16 +86,18 @@ export default class BookmarkButton extends Component {
 
         return (
             <TouchableWithoutFeedback onPress={ () => this.handleBookmark(pageId, isBookmarked) }>
-                <Hoverable>
-                    {isHovered => (
-                        <View style={[styles.iconView, isHovered && styles.iconViewHover]}>
-                            <BookmarkIcon
-                                isBookmarked={isBookmarked}
-                                iconStyle={iconStyle}
-                            />
-                        </View>
-                    )}
-                </Hoverable>
+                <View>
+                    <Hoverable>
+                        {isHovered => (
+                            <View style={[styles.iconView, isHovered && styles.iconViewHover]}>
+                                <BookmarkIcon
+                                    isBookmarked={isBookmarked}
+                                    iconStyle={iconStyle}
+                                />
+                            </View>
+                        )}
+                    </Hoverable>
+                </View>
             </TouchableWithoutFeedback>
         )
     }

@@ -93,7 +93,7 @@ export default class SearchScreen extends Component {
           
           {foundInfo && Object.keys(foundInfo).length > 0 &&
 
-            <ScrollView style={styles.workouts}>
+            <ScrollView style={styles.scrollView}>
 
             {
               Object.keys(foundInfo).map((key, index) => ( 
@@ -133,10 +133,8 @@ export default class SearchScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  workouts: {
-    // marginTop: 10,
-    // marginLeft: 10,
-    // marginRight: 10,
+  scrollView: {
+    paddingHorizontal: 10,
   },
   safeView: {
     flex: 1,

@@ -47,7 +47,7 @@ export default class Category extends Component {
                 <View style={[styles.view, isHovered && styles.viewHover]}>
 
                   <Image
-                    style={styles.image}
+                    style={[styles.image, isHovered && styles.imageHover]}
                     source={{uri: info.image}}
                   />
 
@@ -86,9 +86,10 @@ const styles = StyleSheet.create({
   touchableView: {
     borderRadius: 10,
     overflow: 'hidden',
-    marginHorizontal: 10,
     marginBottom: 10,
+    width: '100%',
     maxWidth: 400,
+    marginHorizontal: 'auto',
   },
 	view: {
     overflow: 'hidden',
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   viewHover: {
-    opacity: 0.85,
+    // opacity: 0.85,
   },
   image: {
     resizeMode: 'cover',
@@ -110,6 +111,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     // borderWidth: 1,
     // borderColor: 'rgb(237, 241, 247)',
+  },
+  imageHover: {
+    opacity: 0.85,
+    // opacity: 0.9,
   },
   divider: {
     marginRight: 10,

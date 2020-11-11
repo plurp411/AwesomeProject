@@ -120,17 +120,19 @@ export default class LikeButton extends Component {
                     </Text>
                 }
                 <TouchableWithoutFeedback onPress={ () => this.handleLike(pageId, isLiked, info.likes) } style={iconStyle}>
-                    <Hoverable>
-                        {isHovered => (
-                            <View style={[styles.iconView, isHovered && styles.iconViewHover]}>
-                                {/* <this.heartIcon isLiked={isLiked}/> */}
-                                <HeartIcon
-                                    isLiked={isLiked}
-                                    iconStyle={iconStyle}
-                                />
-                            </View>
-                        )}
-                    </Hoverable>
+                    <View>
+                        <Hoverable>
+                            {isHovered => (
+                                <View style={[styles.iconView, isHovered && styles.iconViewHover]}>
+                                    {/* <this.heartIcon isLiked={isLiked}/> */}
+                                    <HeartIcon
+                                        isLiked={isLiked}
+                                        iconStyle={iconStyle}
+                                    />
+                                </View>
+                            )}
+                        </Hoverable>
+                    </View>
                 </TouchableWithoutFeedback>
             </View>
         )

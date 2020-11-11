@@ -151,7 +151,7 @@ export default class Workout extends Component {
                 <View style={[styles.view, isHovered && styles.viewHover]}>
 
                   <Image
-                    style={styles.image}
+                    style={[styles.image, isHovered && styles.imageHover]}
                     source={{uri: info.image}}
                   />
 
@@ -188,9 +188,10 @@ const styles = StyleSheet.create({
   touchableView: {
     borderRadius: 10,
     overflow: 'hidden',
-    marginHorizontal: 10,
     marginBottom: 10,
+    width: '100%',
     maxWidth: 400,
+    marginHorizontal: 'auto',
   },
 	view: {
     overflow: 'hidden',
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
     // padding: 8,
     // borderWidth: 2,
     // borderColor: 'rgb(225, 225, 225)'
-    opacity: 0.85,
+    // opacity: 0.85,
   },
   image: {
     resizeMode: 'cover',
@@ -212,6 +213,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
     overflow: 'hidden',
+  },
+  imageHover: {
+    // opacity: 0.85,
+    opacity: 0.9,
   },
 	title: {
     textTransform: 'capitalize',

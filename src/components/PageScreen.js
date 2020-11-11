@@ -79,6 +79,7 @@ class PageScreen extends Component {
 
             {/* <View style={{flex: 1}}> */}
                 <ScrollView>
+                  <View style={styles.contentView}>
             
                     {info && 
                         <>
@@ -107,7 +108,8 @@ class PageScreen extends Component {
                       // fileName={pageId}
                       url={info.url}
                     />
-                    
+
+                    </View>
                 </ScrollView>
                 {/* </View> */}
             </SafeAreaView>
@@ -120,7 +122,17 @@ class PageScreen extends Component {
 const styles = StyleSheet.create({
   safeView: {
     flex: 1,
+    // backgroundColor: 'rgb(255, 255, 255)',
+    // width: '100%',
+    // maxWidth: 800,
+    // marginHorizontal: 'auto',
+  },
+  contentView: {
+    flex: 1,
     backgroundColor: 'rgb(255, 255, 255)',
+    width: '100%',
+    maxWidth: 800,
+    marginHorizontal: 'auto',
   },
   iconsBarView: {
     margin: 10,

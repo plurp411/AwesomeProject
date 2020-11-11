@@ -71,7 +71,7 @@ class CategoriesScreenFinal extends Component {
             {
               info && pageIds &&
             
-              <ScrollView style={styles.workouts}>
+              <ScrollView style={styles.scrollView}>
 
                 {
                   Object.keys(info).map((key, index) => (
@@ -107,6 +107,9 @@ const styles = StyleSheet.create({
   safeView: {
     flex: 1,
     backgroundColor: 'rgb(245, 245, 245)',
+  },
+  scrollView: {
+    paddingHorizontal: 10
   },
 });
 

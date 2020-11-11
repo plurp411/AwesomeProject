@@ -37,7 +37,7 @@ export default class AccountScreen extends Component {
             // title='Settings'
           />
 
-          <ScrollView>
+          <ScrollView style={styles.scrollView}>
 
             <ContactView />
 
@@ -86,20 +86,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgb(245, 245, 245)',
   },
+  scrollView: {
+    paddingHorizontal: 10,
+  },
   profileView: {
     backgroundColor: 'rgb(255, 255, 255)',
     borderRadius: 10,
     overflow: 'hidden',
-    margin: 10,
+    marginBottom: 10,
     marginTop: 0,
     padding: 10,
+    width: '100%',
+    maxWidth: 400,
+    marginHorizontal: 'auto',
   },
   logoutButton: {
     borderRadius: 10,
     overflow: 'hidden',
     height: 40,
-    marginHorizontal: 10,
     marginBottom: 10,
+    width: '100%',
+    maxWidth: 400,
+    marginHorizontal: 'auto',
   },
   logoutButtonText: {
     color: 'rgb(0, 0, 0)',

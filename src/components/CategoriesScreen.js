@@ -5,6 +5,7 @@ import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
 import Workout_ from '../Workout';
 import Category_ from '../Category';
 import GLOBAL from '../global';
+import MainSpinner from './MainSpinner';
 
 export default class CategoriesScreen extends Component {
 
@@ -124,30 +125,38 @@ export default class CategoriesScreen extends Component {
             title='Sorted'
           />
 
-          <ScrollView style={styles.workouts}>
+          {
+            info &&
 
-            {
-              info && Object.keys(info).map((key, index) => (
-                <React.Fragment key={key}>
-                  {
-                    info[key].pageIds &&
-                    <Category
-                      key={key}
-                      // categoryId={key}
-                      info={info[key]}
-                      isFirst={isFirst}
-                      navigation={navigation}
-                    />
-                  }
-                  {
-                    isFirst && info[key].pageIds ? isFirst = false : null
-                  }
-                </React.Fragment>
-              ))
-            }
+            <ScrollView style={styles.scrollView}>
+              {
+                Object.keys(info).map((key, index) => (
+                  <React.Fragment key={key}>
+                    {
+                      info[key].pageIds &&
+                      <Category
+                        key={key}
+                        // categoryId={key}
+                        info={info[key]}
+                        isFirst={isFirst}
+                        navigation={navigation}
+                      />
+                    }
+                    {
+                      isFirst && info[key].pageIds ? isFirst = false : null
+                    }
+                  </React.Fragment>
+                ))
+              }
+            </ScrollView>
+          }
 
-          </ScrollView>
-
+          {
+            !info &&
+            
+            <MainSpinner />
+          }
+          
         </SafeAreaView>
       );
     }
@@ -157,6 +166,9 @@ const styles = StyleSheet.create({
   safeView: {
     flex: 1,
     backgroundColor: 'rgb(245, 245, 245)',
+  },
+  scrollView: {
+    paddingHorizontal: 10,
   },
 });
 

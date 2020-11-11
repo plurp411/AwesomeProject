@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Icon, TopNavigationAction, OverflowMenu, MenuItem } from '@ui-kitten/components';
 // import Clipboard from '@react-native-community/clipboard';
-import { StyleSheet, Clipboard, Linking, Share } from 'react-native';
+import { StyleSheet, Clipboard, Linking, Share, View } from 'react-native';
 import Communications from 'react-native-communications';
 import * as WebBrowser from 'expo-web-browser';
+import Hoverable from '../Hoverable.ts'
 
 const FacebookIcon = (props) => (
     <Icon {...props} name='facebook' style={styles.shareIcon} fill='#4267B2' />
@@ -91,8 +92,15 @@ export default class ShareMenu extends Component {
 
     shareIcon(props) {
         const { iconSize } = this.props
+        const { isMenuVisible } = this.state
         return (
-            <Icon {...props} name='share' style={{ width: iconSize, height: iconSize }} fill='#ed9842' />
+            <Hoverable>
+                {isHovered => (
+                    <View style={[styles.iconView, (isHovered || isMenuVisible) && styles.iconViewHover]}>
+                        <Icon {...props} name='share' style={{ width: iconSize, height: iconSize }} fill='#ed9842' />
+                    </View>
+                )}
+            </Hoverable>
         );
     }
 
@@ -135,12 +143,12 @@ export default class ShareMenu extends Component {
     };
 
     render() {
-        const { textMessage, emailSubject, emailBody } = this.state
+        const { textMessage, emailSubject, emailBody, isMenuVisible } = this.state
         return (
             <>
                 <OverflowMenu
                     anchor={this.renderMenuAction}
-                    visible={this.state.isMenuVisible}
+                    visible={isMenuVisible}
                     onBackdropPress={this.toggleMenu}>
                     <MenuItem accessoryLeft={FacebookIcon} title='Facebook' onPress={this.postOnFacebook} />
                     <MenuItem accessoryLeft={SmsIcon} title='SMS' onPress={() => Communications.textWithoutEncoding(null, textMessage)} />
@@ -156,6 +164,15 @@ const styles = StyleSheet.create({
     shareIcon: {
         height: 20,
         width: 20,
+    },
+    iconView: {
+        borderRadius: 9999,
+        overflow: 'hidden',
+        padding: 5,
+        marginRight: -10,
+    },
+    iconViewHover: {
+        backgroundColor: 'rgb(235, 235, 235)',
     },
 });
 

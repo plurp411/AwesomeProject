@@ -151,7 +151,7 @@ export default class ExploreScreen extends Component {
           {
             info &&
             
-            <ScrollView style={styles.workouts}>
+            <ScrollView style={styles.scrollView}>
 
               {/* {info && info.map((workoutId, index) =>
                 <Workout
@@ -200,10 +200,8 @@ export default class ExploreScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  workouts: {
-    // marginTop: 10,
-    // marginLeft: 10,
-    // marginRight: 10,
+  scrollView: {
+    paddingHorizontal: 10,
   },
   safeView: {
     flex: 1,
