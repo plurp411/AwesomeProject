@@ -1,7 +1,8 @@
 module.exports = {
-    bookmarks: [],
+    // bookmarks: [],
     exploreScreen: null,
-    searchScreen: null,
+    // searchScreen: null,
+    appName: 'Test',
 };
 
 // export function titleCase(str) {

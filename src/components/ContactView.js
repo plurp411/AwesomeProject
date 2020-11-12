@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
         width: '100%',
-        maxWidth: 600,
+        // maxWidth: 600,
+        maxWidth: 400,
         marginHorizontal: 'auto',
     },
     titleText: {

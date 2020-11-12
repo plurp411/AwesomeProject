@@ -127,19 +127,26 @@ const markdownStyles = StyleSheet.create({
   },
   heading: {
     fontWeight: 500,
-    textTransform: 'capitalize',
+    // textTransform: 'capitalize',
   },
   heading1: {
     fontSize: 32,
+    textTransform: 'capitalize',
+    fontWeight: 700,
   },
   heading2: {
     fontSize: 24,
+    textTransform: 'capitalize',
+    fontWeight: 700,
   },
   heading3: {
-    fontSize: 18,
+    marginTop: 20,
+    fontSize: 23,
+    fontWeight: 700,
   },
   heading4: {
-    fontSize: 16,
+    marginTop: 10,
+    fontSize: 21,
   },
   heading5: {
     fontSize: 13,
@@ -148,15 +155,20 @@ const markdownStyles = StyleSheet.create({
     fontSize: 11,
   },
   image: {
-    // backgroundColor: 'rgb(245, 245, 245)',
+    backgroundColor: 'rgb(225, 225, 225)',
     maxWidth: 500,
+    // maxHeight: 300,
     marginTop: 10,
     marginHorizontal: 'auto',
-    resizeMode: 'contain',
     borderRadius: 5,
     overflow: 'hidden',
-    // borderColor: 'rgb(225, 225, 225)',
-    // borderWidth: 1
+    // marginBottom: 10,
+    borderColor: 'rgb(237, 241, 247)',
+    borderWidth: 1,
+    // width: '100%',
+    // height: undefined,
+    // aspectRatio: 1,
+    resizeMode: 'contain',
   },
 });
 

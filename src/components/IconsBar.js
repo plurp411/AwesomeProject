@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   iconsView: {
     flex: 1,
     flexDirection: 'row-reverse',
-    backgroundColor: 'rgb(255, 255, 255)',
+    backgroundColor: 'rgba(255, 255, 255, 0)',
     padding: 0,
   },
   likeButton: {

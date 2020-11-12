@@ -90,6 +90,14 @@ export default class Firebase {
         });
     }
 
+    static uploadUserInfo(email) {
+        return Firebase.getUserRef().update({
+            email: email
+        }).then(() => {
+            return true
+        })
+    }
+
     // static getUser() {
     //     if (!Firebase.user) {
     //         return null

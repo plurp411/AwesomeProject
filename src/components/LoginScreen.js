@@ -123,91 +123,92 @@ export default class LoginScreen extends Component {
       const { handleLogin, errorText, isLoading } = this.props
       return (
         <SafeAreaView style={styles.safeView}>
+          {/* <View style={styles.fullView}> */}
 
-          <Text
-            style={styles.title}
-            category='h1'
-          >
-            Hello,
-            <br></br>
-            Welcome.
-          </Text>
-          
-          <View style={styles.outerView}>
-
-            <ButtonGroup
-              style={styles.buttonGroup}
-              status='basic'
-              size='small'
+            <Text
+              style={styles.title}
+              category='h1'
             >
-              <Button
-                style={[styles.buttonGroupButton, this.getButtonGroupButtonColor(true)]}
-                onPress={() => this.setState({ isLogin: true })}
-                disabled={isLogin || isLoading}
-                children={<this.buttonGroupButtonText text='Login'/>}
-              />
-              
-              <Button
-                style={[styles.buttonGroupButton, this.getButtonGroupButtonColor(false)]}
-                onPress={() => this.setState({ isLogin: false })}
-                disabled={!isLogin || isLoading}
-                children={<this.buttonGroupButtonText text='Create Account'/>}
-              />
-            </ButtonGroup>
+              Hello,
+              <br></br>
+              Welcome.
+            </Text>
+            
+            <View style={styles.outerView}>
 
-            <View style={styles.inputsView}>
-
-              <Input
-                style={{ marginBottom: 10 }}
-                // placeholder='example@something.com'
-                placeholder=''
-                label={<InputLabel text="Email" />}
-                value={email}
-                onChangeText={nextValue => this.setState({ email: nextValue })}
-                disabled={isLoading}
-              />
-
-              <Input
-                placeholder=''
-                label={<InputLabel text="Password" />}
-                value={password}
-                onChangeText={nextValue => this.setState({ password: nextValue })}
-                accessoryRight={this.renderIcon}
-                secureTextEntry={secureTextEntry}
-                caption=''
-                disabled={isLoading}
-              />
-              
-              {
-                errorText &&
+              <ButtonGroup
+                style={styles.buttonGroup}
+                status='basic'
+                size='small'
+              >
+                <Button
+                  style={[styles.buttonGroupButton, this.getButtonGroupButtonColor(true)]}
+                  onPress={() => this.setState({ isLogin: true })}
+                  disabled={isLogin || isLoading}
+                  children={<this.buttonGroupButtonText text='Login'/>}
+                />
                 
-                <ErrorText text={errorText} />
-              }
-              
-              {/* <Divider style={styles.divider}/> */}
+                <Button
+                  style={[styles.buttonGroupButton, this.getButtonGroupButtonColor(false)]}
+                  onPress={() => this.setState({ isLogin: false })}
+                  disabled={!isLogin || isLoading}
+                  children={<this.buttonGroupButtonText text='Create Account'/>}
+                />
+              </ButtonGroup>
 
-              {/* <Button
+              <View style={styles.inputsView}>
+
+                <Input
+                  style={{ marginBottom: 10 }}
+                  // placeholder='example@something.com'
+                  placeholder=''
+                  label={<InputLabel text="Email" />}
+                  value={email}
+                  onChangeText={nextValue => this.setState({ email: nextValue })}
+                  disabled={isLoading}
+                />
+
+                <Input
+                  placeholder=''
+                  label={<InputLabel text="Password" />}
+                  value={password}
+                  onChangeText={nextValue => this.setState({ password: nextValue })}
+                  accessoryRight={this.renderIcon}
+                  secureTextEntry={secureTextEntry}
+                  caption=''
+                  disabled={isLoading}
+                />
+                
+                {
+                  errorText &&
+                  
+                  <ErrorText text={errorText} />
+                }
+                
+                {/* <Divider style={styles.divider}/> */}
+
+                {/* <Button
+                  style={styles.loginButton}
+                  // disabled={email.length <= 0 || password.length <= 0}
+                >
+                  <Text style={styles.loginButtonText}>
+                    Login
+                  </Text>
+                </Button> */}
+
+              </View>
+
+              <Button
                 style={styles.loginButton}
                 // disabled={email.length <= 0 || password.length <= 0}
-              >
-                <Text style={styles.loginButtonText}>
-                  Login
-                </Text>
-              </Button> */}
-
+                children={this.loginButtonText}
+                onPress={() => !isLoading && email && password && handleLogin(email, password, isLogin)}
+                // disabled={isLoading}
+                // accessoryLeft={isLoading && LoadingIndicator}
+                // accessoryRight={ isLogin && LoginIcon }
+              />
             </View>
-
-            <Button
-              style={styles.loginButton}
-              // disabled={email.length <= 0 || password.length <= 0}
-              children={this.loginButtonText}
-              onPress={() => !isLoading && email && password && handleLogin(email, password, isLogin)}
-              // disabled={isLoading}
-              // accessoryLeft={isLoading && LoadingIndicator}
-              // accessoryRight={ isLogin && LoginIcon }
-            />
-          </View>
-
+          {/* </View> */}
         </SafeAreaView>
       );
     }
@@ -218,6 +219,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'rgb(245, 245, 245)',
   },
+  // fullView: {
+  //   flex: 1,
+  //   maxWidth: 1200,
+  //   width: '100%',
+  //   marginHorizontal: 'auto',
+  // },
   title: {
     // alignSelf: 'center',
     fontWeight: 700,
@@ -225,8 +232,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   outerView: {
-    marginVertical: 'auto',
+    margin: 'auto',
     paddingHorizontal: 10,
+    maxWidth: 420,
+    width: '100%',
   },
   buttonGroup: {
     borderRadius: 10,

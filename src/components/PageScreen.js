@@ -34,7 +34,7 @@ class PageScreen extends Component {
 
     componentDidMount() {
       const { info } = this.props.route.params
-      this.props.navigation.setOptions({ title: Helpers.titleCase(info.title) })
+      this.props.navigation.setOptions({ title: Helpers.titleCase(info.title) + ' | ' + GLOBAL.appName })
       this.props.navigation.addListener('focus', this.onScreenFocus)
     }
 

@@ -22,6 +22,7 @@ import Firebase from './src/Firebase';
 import Workout from './src/Workout';
 import Like from './src/Like';
 import Bookmark from './src/Bookmark';
+import GLOBAL from './src/global';
 
 let firebase = Firebase.start()
 
@@ -131,7 +132,7 @@ function ExploreStackNavigator() {
       <Stack.Screen
         name="Explore"
         component={ExploreScreen}
-        options={{ title: 'Explore' }}
+        options={{ title: 'Explore | ' + GLOBAL.appName }}
       />
 
       <Stack.Screen
@@ -151,7 +152,7 @@ function SearchStackNavigator() {
       <Stack.Screen
         name="Search"
         component={SearchScreen}
-        options={{ title: 'Search' }}
+        options={{ title: 'Search | ' + GLOBAL.appName }}
       />
 
       <Stack.Screen
@@ -191,7 +192,7 @@ function CategoriesStackNavigator() {
       <Stack.Screen
         name="Categories"
         component={CategoriesScreen}
-        options={{ title: 'Sorted' }}
+        options={{ title: 'Sorted | ' + GLOBAL.appName }}
       />
 
       <Stack.Screen
@@ -217,7 +218,7 @@ function BookmarksStackNavigator() {
       <Stack.Screen
         name="Bookmarks"
         component={BookmarksScreen}
-        options={{ title: 'Saved' }}
+        options={{ title: 'Saved | ' + GLOBAL.appName }}
       />
 
       <Stack.Screen
@@ -238,7 +239,7 @@ function AccountStackNavigator() {
         name="Account"
         component={AccountScreen}
         // options={{ title: 'Settings' }}
-        options={{ title: 'Account' }}
+        options={{ title: 'Account | ' + GLOBAL.appName }}
       />
 
       {/* <Stack.Screen
@@ -426,7 +427,8 @@ export default class extends Component {
       })
 
       if (errorText == '') {
-        this.setState({ isSignedIn: true })
+        const isSignedIn = await Firebase.uploadUserInfo(email)
+        this.setState({ isSignedIn: isSignedIn })
       }
       
     }

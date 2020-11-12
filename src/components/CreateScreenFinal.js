@@ -17,7 +17,7 @@ class CreateScreenFinal extends Component {
 
     componentDidMount() {
       const { info } = this.props.route.params
-      // this.props.navigation.setOptions({ title: 'Submit' })
+      // this.props.navigation.setOptions({ title: 'Review' })
     }
 
     render() {

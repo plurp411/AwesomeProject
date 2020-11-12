@@ -23,7 +23,7 @@ class CategoriesScreenFinal extends Component {
     componentDidMount() {
       
       const { title } = this.props.route.params
-      this.props.navigation.setOptions({ title: Helpers.titleCase(title) })
+      this.props.navigation.setOptions({ title: Helpers.titleCase(title) + ' | ' + GLOBAL.appName })
       this.props.navigation.addListener('focus', this.onScreenFocus)
 
       // const jsonPath = require(`./pages/all.txt`);
