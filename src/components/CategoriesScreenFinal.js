@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BackNavbar from './BackNavbar';
 import Workout from './Workout';
+import MainSpinner from './MainSpinner';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Bookmark from '../Bookmark';
@@ -96,7 +97,13 @@ class CategoriesScreenFinal extends Component {
 
               </ScrollView>
             }
-                
+
+            {
+              (!info || !pageIds) &&
+
+              <MainSpinner />
+            }
+            
           </SafeAreaView>
         </>
       );

@@ -62,10 +62,10 @@ export default class ContactView extends Component {
 
 const styles = StyleSheet.create({
     outerView: {
-        backgroundColor: 'rgb(255, 255, 255)',
+        // backgroundColor: 'rgb(255, 255, 255)',
         overflow: 'hidden',
         marginVertical: 10,
-        padding: 10,
+        padding: 20,
         borderRadius: 10,
         width: '100%',
         // maxWidth: 600,

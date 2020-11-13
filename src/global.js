@@ -2,7 +2,7 @@ module.exports = {
     // bookmarks: [],
     exploreScreen: null,
     // searchScreen: null,
-    appName: 'Test',
+    appName: 'Workouts',
 };
 
 // export function titleCase(str) {

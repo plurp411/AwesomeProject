@@ -4,6 +4,7 @@ import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import Firebase from '../Firebase';
 import { Text, Button } from '@ui-kitten/components';
 import ContactView from './ContactView';
+import MainSpinner from './MainSpinner';
 
 // const LogoutIcon = (props) => (
 //   <Icon {...props} name='log-out-outline' fill='' />
@@ -42,6 +43,7 @@ export default class AccountScreen extends Component {
             <ContactView />
 
             {
+              
               user &&
 
               <View style={styles.profileView}>
@@ -52,6 +54,14 @@ export default class AccountScreen extends Component {
                   {user.email}
                 </Text>
 
+              </View>
+            }
+
+            {
+              !user &&
+              
+              <View style={styles.spinnerView}>
+                <MainSpinner />
               </View>
             }
 
@@ -112,6 +122,9 @@ const styles = StyleSheet.create({
   logoutButtonText: {
     color: 'rgb(0, 0, 0)',
     fontWeight: 600,
+  },
+  spinnerView: {
+    marginBottom: 30,
   },
 });
 

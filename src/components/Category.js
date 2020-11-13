@@ -59,7 +59,7 @@ export default class Category extends Component {
                     </Text>
 
                     <Text style={styles.subtitle}>
-                      {info.pageIds.length} Item
+                      {info.pageIds.length} Workout
                       {
                         info.pageIds.length > 1 &&
                         <>s</>
@@ -109,8 +109,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 10,
     overflow: 'hidden',
-    // borderWidth: 1,
-    // borderColor: 'rgb(237, 241, 247)',
+    borderWidth: 1,
+    borderColor: 'rgb(237, 241, 247)',
   },
   imageHover: {
     opacity: 0.85,

@@ -8,6 +8,7 @@ import Bookmark from '../Bookmark';
 import Like from '../Like';
 import Workout_ from '../Workout';
 import GLOBAL from '../global'
+import MainSpinner from './MainSpinner';
 
 export default class SearchScreen extends Component {
 
@@ -15,7 +16,7 @@ export default class SearchScreen extends Component {
       super(props)
       this.state = {
         // info: null,
-        foundInfo: null,
+        foundInfo: {},
         // bookmarks: null,
         // likes: null,
       }
@@ -67,8 +68,12 @@ export default class SearchScreen extends Component {
         return
       }
 
+      this.setState({ foundInfo: null })
+
       const foundInfo = Object.keys(info)
-        .filter(key => info[key]['title'].toLowerCase().includes(cleanSearchInput))
+        .filter(key => {
+          return info[key]['title'].toLowerCase().includes(cleanSearchInput) || info[key]['subtitle'].toLowerCase().includes(cleanSearchInput) || info[key]['category'].toLowerCase().includes(cleanSearchInput)
+        })
         .reduce((obj, key) => {
           obj[key] = info[key];
           return obj;
@@ -110,13 +115,18 @@ export default class SearchScreen extends Component {
             </ScrollView>
           }
 
-          {(!foundInfo || Object.keys(foundInfo).length <= 0) &&
+          {/* {(!foundInfo || Object.keys(foundInfo).length <= 0) && */}
 
+          {foundInfo && Object.keys(foundInfo).length <= 0 &&
+          
             <Text style={styles.emptyText}>
               No Results Found
             </Text>
           }
 
+          {!foundInfo &&
+            <MainSpinner />
+          }
 
           {/* <Button
             title="Go to Page"

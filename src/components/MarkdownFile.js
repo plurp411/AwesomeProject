@@ -2,8 +2,9 @@
 // import {PureComponent} from 'react-native';
 import React, { Component } from 'react';
 import Markdown, {getUniqueID} from 'react-native-markdown-renderer';
-import { StyleSheet, View, SafeAreaView, ScrollView } from 'react-native';
-import MainSpinner from './MainSpinner';
+import { StyleSheet, View, Dimensions, Image } from 'react-native';
+import MarkdownImage from './MarkdownImage';
+
 // import { Divider } from '@ui-kitten/components';
 // import PageTitling from './PageTitling';
 // import BottomNavButtons from './BottomNavButtons';
@@ -20,6 +21,14 @@ import MainSpinner from './MainSpinner';
 //       </Text>
 //     </>,
 // };
+
+const rules = {
+  image: (node, children, parent, styles) => (
+    <React.Fragment key={node.key}>
+      <MarkdownImage uri={node.attributes.src} mdStyles={styles} alt={node.content} />
+    </React.Fragment>
+  )
+};
 
 export default class MarkdownFile extends Component {
 
@@ -98,18 +107,29 @@ export default class MarkdownFile extends Component {
               <Divider />
             </>
           } */}
+
+
+
+
+
           
-          {/* {
-            !markdown &&
-            <MainSpinner />
-          } */}
           {
             markdown &&
             <View style={styles.view}>
-              <Markdown style={markdownStyles}>{markdown}</Markdown>
+              <Markdown style={markdownStyles} rules={rules}>{markdown}</Markdown>
             </View>
           }
-
+          {/* {
+            !markdown &&
+            <View style={styles.spinnerView}>
+              <MainSpinner />
+            </View>
+          }
+          
+          
+          
+          
+          */}
           {/* <Divider /> */}
 
           {/* <BottomNavButtons /> */}
@@ -154,13 +174,38 @@ const markdownStyles = StyleSheet.create({
   heading6: {
     fontSize: 11,
   },
+  // image: {
+  //   backgroundColor: 'rgb(225, 225, 225)',
+  //   maxWidth: 500,
+  //   // maxHeight: 300,
+  //   marginTop: 10,
+  //   marginHorizontal: 'auto',
+  //   borderRadius: 10,
+  //   overflow: 'hidden',
+  //   // marginBottom: 10,
+  //   borderColor: 'rgb(237, 241, 247)',
+  //   borderWidth: 1,
+  //   // width: '100%',
+  //   // height: undefined,
+  //   // aspectRatio: 1,
+  //   resizeMode: 'contain',
+  // },
+  // image: {
+  //   resizeMode: 'contain',
+  //   flex: 1,
+  //   // height: 300,
+  //   // width: '100%',
+  // },
+  // imageView: {
+  //   flex: 1,
+  // }
   image: {
     backgroundColor: 'rgb(225, 225, 225)',
     maxWidth: 500,
     // maxHeight: 300,
     marginTop: 10,
     marginHorizontal: 'auto',
-    borderRadius: 5,
+    borderRadius: 10,
     overflow: 'hidden',
     // marginBottom: 10,
     borderColor: 'rgb(237, 241, 247)',
@@ -168,18 +213,21 @@ const markdownStyles = StyleSheet.create({
     // width: '100%',
     // height: undefined,
     // aspectRatio: 1,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
   },
 });
 
 const styles = StyleSheet.create({
   view: {
     backgroundColor: 'rgb(255, 255, 255)',
-    paddingTop: 20,
-    paddingBottom: 10,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     // zIndex: 2,
   },
+  // spinnerView: {
+  //   backgroundColor: 'rgb(45, 240, 0)',
+  //   flex: 1,
+  //   height: 200
+  // },
 });
 

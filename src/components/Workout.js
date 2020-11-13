@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Text, Divider } from '@ui-kitten/components';
-import { StyleSheet, Image, View, TouchableWithoutFeedback, TouchableHighlight } from 'react-native';
+import { StyleSheet, View, TouchableWithoutFeedback, TouchableHighlight, Platform } from 'react-native';
 // import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import ShareMenu from './ShareMenu';
 // import Bookmark from '../Bookmark';
 import BookmarkButton from './BookmarkButton';
 import IconsBar from './IconsBar';
+import NewImage from './NewImage';
 import Hoverable from '../Hoverable.ts';
+// import { Image } from "react-native-expo-image-cache";
+// import {CacheManager} from "react-native-expo-image-cache";
 
 // const getBookmarksData = async () => {
 //   try {
@@ -132,6 +135,17 @@ export default class Workout extends Component {
   render() {
     const { info, pageId } = this.props
     // const iconSize = 25
+
+    // let uri = info.image
+    // let preview = null
+    // if (!isWeb) {
+    //   preview = { uri: 'https://cdn141.picsart.com/329003609030201.jpg?type=webp&to=crop&r=256' };
+    //   const cachedImage = this.getCachedImage(info.image)
+    //   if (cachedImage) {
+    //     uri = cachedImage
+    //   }
+    // }
+
     return (
       <>
         {info &&
@@ -150,9 +164,10 @@ export default class Workout extends Component {
               >
                 <View style={[styles.view, isHovered && styles.viewHover]}>
 
-                  <Image
+                  <NewImage
                     style={[styles.image, isHovered && styles.imageHover]}
-                    source={{uri: info.image}}
+                    uri={info.image}
+                    alt={info.title}
                   />
 
                   <Text style={styles.title}>
@@ -213,6 +228,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: 'rgb(237, 241, 247)',
   },
   imageHover: {
     // opacity: 0.85,

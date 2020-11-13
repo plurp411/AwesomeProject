@@ -41,7 +41,7 @@ export default class BookmarkButton extends Component {
             iconStyle: {
                 width: iconSize,
                 height: iconSize,
-                cursor: 'pointer',
+                // cursor: 'pointer',
             }
         })
     }
@@ -108,6 +108,7 @@ const styles = StyleSheet.create({
         borderRadius: 9999,
         overflow: 'hidden',
         padding: 5,
+        cursor: 'pointer',
     },
     iconViewHover: {
         backgroundColor: 'rgb(235, 235, 235)',

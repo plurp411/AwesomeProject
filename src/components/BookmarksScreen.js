@@ -111,7 +111,7 @@ export default class BookmarksScreen extends Component {
 
             <View style={styles.emptyView}>
               <Text style={styles.emptyText}>
-                You Have No Bookmarks
+                You Have Nothing Saved
               </Text>
 
               <Button
@@ -135,7 +135,6 @@ export default class BookmarksScreen extends Component {
 
             <MainSpinner />
           }
-
 
           {/* <Button
             title="Go to Page"
@@ -162,8 +161,8 @@ const styles = StyleSheet.create({
   },
   emptyView: {
     margin: 'auto',
-    justifyContent: 'center',
-    height: '100%',
+    // justifyContent: 'center',
+    // flex: 1,
   },
   emptyText: {
     color: 'rgb(150, 150, 150)',

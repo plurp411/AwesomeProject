@@ -47,7 +47,7 @@ class SearchInput extends Component {
         return (
             <Input
                 styles={styles.searchInput}
-                placeholder="Search All Items"
+                placeholder="Search All Workouts"
                 value={value}
                 onChangeText={nextValue => this.setState({ value: nextValue })}
                 // accessoryRight={this.searchButton}
