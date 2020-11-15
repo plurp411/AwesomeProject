@@ -78,7 +78,11 @@ class PageScreen extends Component {
             /> */}
 
             {/* <View style={{flex: 1}}> */}
-                <ScrollView>
+                <ScrollView
+                  contentContainerStyle={{
+                    flex: 1
+                  }}
+                >
                   <View style={styles.contentView}>
             
                     {info && 
@@ -111,6 +115,7 @@ class PageScreen extends Component {
 
                     </View>
                 </ScrollView>
+                
                 {/* </View> */}
             </SafeAreaView>
         {/* </Layout> */}

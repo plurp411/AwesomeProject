@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, Divider, Icon } from '@ui-kitten/components';
 import { StyleSheet, Image, View, TouchableHighlight } from 'react-native';
 import Hoverable from '../Hoverable.ts';
+import NewImage from './NewImage';
 
 const RightIcon = (props) => (
   <Icon {...props} name='chevron-right-outline' style={styles.icon} fill='' />
@@ -46,9 +47,10 @@ export default class Category extends Component {
               >
                 <View style={[styles.view, isHovered && styles.viewHover]}>
 
-                  <Image
+                  <NewImage
                     style={[styles.image, isHovered && styles.imageHover]}
-                    source={{uri: info.image}}
+                    uri={info.image}
+                    alt={info.title}
                   />
 
                   {/* <Divider style={styles.divider}/> */}
@@ -109,8 +111,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 10,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: 'rgb(237, 241, 247)',
+    // borderWidth: 1,
+    // borderColor: 'rgb(237, 241, 247)',
   },
   imageHover: {
     opacity: 0.85,

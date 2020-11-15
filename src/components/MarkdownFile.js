@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Markdown, {getUniqueID} from 'react-native-markdown-renderer';
 import { StyleSheet, View, Dimensions, Image } from 'react-native';
 import MarkdownImage from './MarkdownImage';
+import MainSpinner from './MainSpinner';
 
 // import { Divider } from '@ui-kitten/components';
 // import PageTitling from './PageTitling';
@@ -119,17 +120,17 @@ export default class MarkdownFile extends Component {
               <Markdown style={markdownStyles} rules={rules}>{markdown}</Markdown>
             </View>
           }
-          {/* {
+          {
             !markdown &&
-            <View style={styles.spinnerView}>
+            // <View style={styles.spinnerView}>
               <MainSpinner />
-            </View>
+            // </View>
           }
           
           
           
           
-          */}
+         
           {/* <Divider /> */}
 
           {/* <BottomNavButtons /> */}
@@ -208,8 +209,8 @@ const markdownStyles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     // marginBottom: 10,
-    borderColor: 'rgb(237, 241, 247)',
-    borderWidth: 1,
+    // borderColor: 'rgb(237, 241, 247)',
+    // borderWidth: 1,
     // width: '100%',
     // height: undefined,
     // aspectRatio: 1,
@@ -225,7 +226,6 @@ const styles = StyleSheet.create({
     // zIndex: 2,
   },
   // spinnerView: {
-  //   backgroundColor: 'rgb(45, 240, 0)',
   //   flex: 1,
   //   height: 200
   // },

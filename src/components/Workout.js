@@ -228,8 +228,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: 'rgb(237, 241, 247)',
+    // borderWidth: 1,
+    // borderColor: 'rgb(237, 241, 247)',
   },
   imageHover: {
     // opacity: 0.85,
